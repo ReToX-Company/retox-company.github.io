@@ -3,19 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReToX Company | Network</title>
+    <title>ReToX Company | Website</title>
     <style>
-        body { 
-            background: #111; 
-            color: white; 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            overflow-x: hidden; 
-        }
+        body { background: #111; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         
         .container { 
             background: #222; 
@@ -26,269 +16,120 @@
             width: 90%; 
             max-width: 500px; 
             box-shadow: 0 0 30px rgba(255, 170, 0, 0.2); 
-            position: relative; 
-        }
-        
-        h1 { 
-            color: #ffaa00; 
-            font-size: 2.5em; 
-            text-transform: uppercase; 
-            text-shadow: 0 0 15px rgba(255, 170, 0, 0.6), 2px 2px #000; 
-            margin-bottom: 5px; 
+            position: relative;
         }
 
-        .user-badge {
-            color: #ffaa00;
-            font-size: 0.9em;
-            margin-bottom: 10px;
-            font-style: italic;
-            font-weight: bold;
-        }
+        h1 { color: #ffaa00; font-size: 2.5em; text-transform: uppercase; text-shadow: 0 0 15px rgba(255, 170, 0, 0.6); margin-bottom: 20px; }
 
-        /* Status & IP */
-        .status-wrapper { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin-bottom: 15px; 
-            font-weight: bold; 
-            color: #ffaa00; 
-        }
-        .status-dot { 
-            height: 10px; 
-            width: 10px; 
-            background-color: #ffaa00; 
-            border-radius: 50%; 
-            display: inline-block; 
-            margin-right: 8px; 
-            box-shadow: 0 0 10px #ffaa00; 
-            animation: blink 1.5s infinite; 
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        
-        .ip { 
-            background: #000; 
-            padding: 15px; 
-            font-family: monospace; 
-            border-radius: 10px; 
-            color: #555; 
-            margin-bottom: 25px; 
-            border: 1px solid #333; 
-            text-decoration: line-through; 
-        }
+        /* Die Liste der Einträge */
+        .content-list { list-style: none; padding: 0; margin: 20px 0; }
 
-        /* Buttons & Navigation */
-        .btn { 
-            display: inline-block; 
-            background: #ffaa00; 
-            color: black; 
-            padding: 12px 25px; 
-            border-radius: 8px; 
-            text-decoration: none; 
-            font-weight: bold; 
-            cursor: pointer; 
-            border: none; 
-            width: 100%; 
-            box-sizing: border-box; 
-            margin-bottom: 10px; 
-            transition: 0.2s; 
-            font-size: 1em; 
-        }
-        .btn:hover { transform: scale(1.02); background: #ffbb33; }
-        .btn-apply { background: #5555ff; color: white; margin-top: 10px; }
-        
-        .link-web { 
-            display: block; 
-            color: #aaa; 
-            text-decoration: none; 
-            font-size: 0.9em; 
-            margin: 15px 0; 
-            transition: 0.3s; 
-            cursor: pointer; 
-        }
-        .link-web:hover { color: #ffaa00; text-decoration: underline; }
-
-        /* Inhaltsverzeichnis Style */
-        .content-list {
-            text-align: left;
-            margin: 20px 0;
-            padding: 0;
-            list-style: none;
-        }
-        .content-list li {
+        .content-item {
             background: #333;
-            margin-bottom: 10px;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #ffaa00;
-            transition: 0.3s;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #ffaa00;
             cursor: pointer;
-        }
-        .content-list li:hover {
-            background: #444;
-            transform: translateX(5px);
-        }
-        .content-list h3 {
-            margin: 0;
-            color: #ffaa00;
-            font-size: 1.1em;
-        }
-        .content-list p {
-            margin: 5px 0 0 0;
-            font-size: 0.85em;
-            color: #ccc;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
         }
 
-        /* Formular & Overlay */
-        input, textarea { 
-            width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-family: inherit;
+        .content-item:hover { background: #3a3a3a; transform: scale(1.02); }
+
+        .content-item h3 { margin: 0; color: #ffaa00; font-size: 1.2em; transition: 0.3s; }
+        .content-item p { margin: 8px 0 0 0; font-size: 0.9em; color: #ccc; transition: 0.3s; }
+
+        /* Der Detail-Text (am Anfang versteckt) */
+        .detail-text {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            color: white;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-top: 10px;
         }
-        textarea { resize: none; min-height: 110px; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .login-box { background: #222; padding: 40px 30px; border-radius: 20px; border: 2px solid #ffaa00; width: 90%; max-width: 400px; position: relative; text-align: center; }
-        .close-x { position: absolute; top: 15px; right: 20px; color: #ffaa00; font-size: 24px; font-weight: bold; cursor: pointer; }
+
+        /* Animation Klassen */
+        .active { background: #ffaa00 !important; transform: scale(1.05); border-left-color: white; }
+        .active h3 { color: #222; font-weight: bold; }
+        .active p.short-desc { display: none; } /* Alte Kurzbeschreibung weg */
+        .active .detail-text { display: block; animation: fadeInUp 0.5s forwards; opacity: 1; color: #111; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-back { display: block; width: 100%; background: #444; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .btn-back:hover { background: #555; }
+
         .hidden { display: none; }
-        .btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="overlay" id="auth-overlay">
-        <div class="login-box" id="login-form">
-            <span class="close-x" onclick="closeAuth()">×</span>
-            <h1>Login</h1>
-            <input type="text" id="login-user" placeholder="Benutzername">
-            <input type="password" id="login-pass" placeholder="Passwort">
-            <button class="btn" onclick="handleLogin()">Einloggen</button>
-            <p>Neu hier? <span style="color:#ffaa00; cursor:pointer;" onclick="toggleAuth('reg')">Registrieren</span></p>
-        </div>
-        <div class="login-box hidden" id="register-form">
-            <span class="close-x" onclick="closeAuth()">×</span>
-            <h1>Registrieren</h1>
-            <input type="text" id="reg-user" placeholder="Wunsch-Name">
-            <input type="password" id="reg-pass" placeholder="Passwort">
-            <button class="btn" onclick="handleRegister()">Account erstellen</button>
-            <p>Schon dabei? <span style="color:#ffaa00; cursor:pointer;" onclick="toggleAuth('log')">Zum Login</span></p>
-        </div>
-    </div>
-
-    <div class="container" id="main-page">
-        <h1>ReToX Company</h1>
-        <div id="user-greeting" class="user-badge hidden"></div>
-        
-        <div class="status-wrapper">
-            <span class="status-dot"></span>
-            <span>Server in Arbeit...</span>
-        </div>
-        <div class="ip">RETOX-NETWORK.DDNS.NET</div>
-        
-        <button class="btn btn-apply" onclick="showPage('apply-page')">✨ Jetzt bewerben</button>
-        <span class="link-web" onclick="showPage('info-page')">🌐 Weiter zur Website</span>
-        
-        <button id="guest-login-btn" class="btn" style="background: transparent; color: #ffaa00; border: 1px solid #ffaa00;" onclick="openAuth()">Anmelden / Registrieren</button>
-        <button id="user-logout-btn" class="btn btn-logout hidden" onclick="handleLogout()">Abmelden</button>
-    </div>
-
-    <div class="container hidden" id="info-page">
+    <div class="container">
         <h1>Website</h1>
-        <p>Willkommen im Hauptmenü von ReToX.</p>
-        
+        <p id="sub-title">Willkommen im Hauptmenü von ReToX.</p>
+
         <ul class="content-list">
-            <li>
+            <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Über Uns</h3>
-                <p>Erfahre mehr über die Geschichte von ReToX.</p>
+                <p class="short-desc">Erfahre mehr über die Geschichte von ReToX.</p>
+                <div class="detail-text">
+                    ReToX Company wurde 2024 gegründet. Wir sind ein Team von passionierten Entwicklern und Gamern, die es sich zum Ziel gesetzt haben, eine einzigartige Community aufzubauen.
+                </div>
             </li>
-            <li>
+
+            <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unser Minecraft Server</h3>
-                <p>Alle technischen Daten und Spielmodi.</p>
+                <p class="short-desc">Alle technischen Daten und Spielmodi.</p>
+                <div class="detail-text">
+                    Version: 1.20.x <br>
+                    Modi: CityBuild, Survival, MiniGames <br>
+                    IP: RETOX-NETWORK.DDNS.NET
+                </div>
             </li>
-            <li>
+
+            <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unsere Social Kanäle</h3>
-                <p>Folge uns auf Discord, YouTube und mehr.</p>
+                <p class="short-desc">Folge uns auf Discord, YouTube und mehr.</p>
+                <div class="detail-text">
+                    Discord: discord.gg/retox <br>
+                    YouTube: @ReToX_Company <br>
+                    Instagram: @retox.network
+                </div>
             </li>
-            <li>
+
+            <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unsere Mitarbeiter</h3>
-                <p>Das Team hinter dem Netzwerk.</p>
+                <p class="short-desc">Das Team hinter dem Netzwerk.</p>
+                <div class="detail-text">
+                    Admin: MaxMustermann <br>
+                    Moderatoren: Tim, Sarah, Kevin <br>
+                    Developer: Lukas
+                </div>
             </li>
         </ul>
-        
-        <button class="btn" style="background:#444; color:white;" onclick="showPage('main-page')">Zurück zum Portal</button>
-    </div>
 
-    <div class="container hidden" id="apply-page">
-        <h1>Bewerbung</h1>
-        <form id="apply-form" action="https://formspree.io/f/xwvnewol" method="POST">
-            <input type="text" name="name" placeholder="Echter Name" required>
-            <input type="text" name="mc_name" placeholder="Minecraft Name" required>
-            <input type="number" name="age" placeholder="Alter" required>
-            <textarea name="message" placeholder="Warum willst du ins Team?" required></textarea>
-            <button type="submit" id="submit-btn" class="btn">Absenden</button>
-        </form>
-        <button class="btn" style="background:#444; color:white; margin-top: 5px;" onclick="showPage('main-page')">Zurück</button>
-        
-        <div id="success-box" class="hidden">
-            <p style="color: #55ff55; font-weight: bold;">Verschickt!</p>
-            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn" style="background:#7289da; color:white;">Discord beitreten</a>
-        </div>
+        <button class="btn-back" onclick="window.history.back()">Zurück zum Portal</button>
     </div>
 
     <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
-            document.getElementById(pageId).classList.remove('hidden');
-        }
-
-        function closeAuth() { document.getElementById('auth-overlay').classList.add('hidden'); }
-        function openAuth() { document.getElementById('auth-overlay').classList.remove('hidden'); }
-        function toggleAuth(type) {
-            document.getElementById('login-form').classList.toggle('hidden', type === 'reg');
-            document.getElementById('register-form').classList.toggle('hidden', type === 'log');
-        }
-
-        function handleRegister() {
-            const u = document.getElementById('reg-user').value;
-            const p = document.getElementById('reg-pass').value;
-            if(u && p) {
-                localStorage.setItem('retox_u', u);
-                localStorage.setItem('retox_p', p);
-                alert("Erfolgreich! Logge dich nun ein.");
-                toggleAuth('log');
-            }
-        }
-
-        function handleLogin() {
-            const u = document.getElementById('login-user').value;
-            const p = document.getElementById('login-pass').value;
-            if(u === localStorage.getItem('retox_u') && p === localStorage.getItem('retox_p')) {
-                const greeting = document.getElementById('user-greeting');
-                greeting.innerText = "Hallo, " + u + "!";
-                greeting.classList.remove('hidden');
-                document.getElementById('guest-login-btn').classList.add('hidden');
-                document.getElementById('user-logout-btn').classList.remove('hidden');
-                closeAuth();
-            } else { alert("Falsch!"); }
-        }
-
-        function handleLogout() {
-            document.getElementById('user-greeting').classList.add('hidden');
-            document.getElementById('guest-login-btn').classList.remove('hidden');
-            document.getElementById('user-logout-btn').classList.add('hidden');
-            alert("Abgemeldet!");
-        }
-
-        document.getElementById("apply-form").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const btn = document.getElementById("submit-btn");
-            btn.disabled = true; btn.innerText = "Sende...";
-            fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: { 'Accept': 'application/json' }
-            }).then(() => {
-                this.classList.add('hidden');
-                document.getElementById('success-box').classList.remove('hidden');
+        function toggleDetail(element) {
+            // Falls schon ein anderes Element offen ist, schließen wir es (optional)
+            const allItems = document.querySelectorAll('.content-item');
+            allItems.forEach(item => {
+                if (item !== element) item.classList.remove('active');
             });
-        });
+
+            // Das geklickte Element umschalten
+            element.classList.toggle('active');
+        }
     </script>
 </body>
 </html>
