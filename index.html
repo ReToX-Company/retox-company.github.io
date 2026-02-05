@@ -7,41 +7,43 @@
     <style>
         body { background: #111; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 0 20px rgba(255, 170, 0, 0.1); }
-        h1 { color: #ffaa00; margin-top: 0; }
-        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #777; margin: 20px 0; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
+        h1 { color: #ffaa00; margin-top: 0; text-shadow: 2px 2px #000; }
+        .work-notice { font-weight: bold; color: #ffaa00; margin-bottom: 20px; border: 1px dashed #ffaa00; padding: 10px; }
+        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin: 20px 0; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
         .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; font-size: 1em; }
         .btn-apply { background: #5555ff; color: white; margin-top: 15px; }
         input, textarea { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; }
         label { display: block; text-align: left; font-size: 0.8em; color: #aaa; margin-top: 10px; }
         .hidden { display: none; }
-        .work-notice { font-style: italic; color: #ffaa00; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div class="container" id="main-page">
         <h1>ReToX Company</h1>
-        <p class="work-notice">⚠️ Unser Netzwerk befindet sich aktuell im Aufbau!</p>
-        <p>Wir arbeiten hart daran, euch bald ein tolles Spielerlebnis zu bieten.</p>
+        <div class="work-notice">⚠️ SERVER AKTUELL IM AUFBAU ⚠️</div>
+        <p>Wir arbeiten an einem einzigartigen Netzwerk für euch.</p>
         <div class="ip">RETOX-NETWORK.DDNS.NET</div>
-        <p>Status: <span style="color: #ffaa00; font-weight: bold;">IN ARBEIT...</span></p>
-        <button class="btn btn-apply" onclick="showApply()">✨ Vorab bewerben</button>
+        <p>Status: <span style="color: #ffaa00; font-weight: bold;">BAUSTELLE</span></p>
+        <button class="btn btn-apply" onclick="showApply()">✨ Jetzt bewerben</button>
     </div>
 
     <div class="container hidden" id="apply-page">
-        <h1>Team Bewerbung</h1>
-        <p>Hilf uns beim Aufbau des Servers!</p>
-        <form action="https://formspree.io/f/retox.company@gmx.at" method="POST">
+        <h1>Bewerbung</h1>
+        <p>Hilf uns, ReToX groß zu machen!</p>
+        
+        <form action="https://formspree.io/f/xwvnewol" method="POST">
             <label>Echter Name</label>
             <input type="text" name="name" required>
             <label>Minecraft Name</label>
             <input type="text" name="mc_name" required>
             <label>Alter</label>
             <input type="number" name="age" required>
-            <label>Was sind deine Stärken (Build, Dev, Support)?</label>
+            <label>Was ist deine Stärke? (Build/Dev/Support)</label>
             <textarea name="reason" rows="4" required></textarea>
             <button type="submit" class="btn">Bewerbung absenden</button>
         </form>
+        
         <button class="btn" style="background:#444; color:white; margin-top:10px;" onclick="showMain()">Zurück</button>
     </div>
 
