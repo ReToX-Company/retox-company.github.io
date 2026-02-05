@@ -5,39 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReToX Company | Network</title>
     <style>
-        body { background: #111; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        body { 
+            background: #111; 
+            color: white; 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
         
         /* Haupt-Container */
-        .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 0 30px rgba(255, 170, 0, 0.2); position: relative; }
+        .container { 
+            background: #222; 
+            padding: 30px; 
+            border-radius: 20px; 
+            border: 2px solid #ffaa00; 
+            text-align: center; 
+            width: 90%; 
+            max-width: 500px; 
+            box-shadow: 0 0 30px rgba(255, 170, 0, 0.2); 
+            position: relative; 
+        }
         
-        h1 { color: #ffaa00; font-size: 2.5em; text-transform: uppercase; text-shadow: 0 0 15px rgba(255, 170, 0, 0.6), 2px 2px #000; margin-bottom: 10px; }
+        h1 { 
+            color: #ffaa00; 
+            font-size: 2.5em; 
+            text-transform: uppercase; 
+            text-shadow: 0 0 15px rgba(255, 170, 0, 0.6), 2px 2px #000; 
+            margin-bottom: 10px; 
+        }
 
         /* Login-Overlay */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .login-box { background: #222; padding: 40px 30px; border-radius: 20px; border: 2px solid #ffaa00; width: 90%; max-width: 400px; position: relative; text-align: center; }
+        .overlay { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.85); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 1000; 
+        }
+        .login-box { 
+            background: #222; 
+            padding: 40px 30px; 
+            border-radius: 20px; 
+            border: 2px solid #ffaa00; 
+            width: 90%; 
+            max-width: 400px; 
+            position: relative; 
+            text-align: center; 
+        }
         
-        .close-x { position: absolute; top: 15px; right: 20px; color: #ffaa00; font-size: 24px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .close-x { 
+            position: absolute; 
+            top: 15px; 
+            right: 20px; 
+            color: #ffaa00; 
+            font-size: 24px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
         .close-x:hover { color: white; transform: scale(1.2); }
 
         /* Status & IP */
-        .status-wrapper { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-weight: bold; color: #ffaa00; }
-        .status-dot { height: 10px; width: 10px; background-color: #ffaa00; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px #ffaa00; animation: blink 1.5s infinite; }
+        .status-wrapper { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-bottom: 15px; 
+            font-weight: bold; 
+            color: #ffaa00; 
+        }
+        .status-dot { 
+            height: 10px; 
+            width: 10px; 
+            background-color: #ffaa00; 
+            border-radius: 50%; 
+            display: inline-block; 
+            margin-right: 8px; 
+            box-shadow: 0 0 10px #ffaa00; 
+            animation: blink 1.5s infinite; 
+        }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin-bottom: 25px; border: 1px solid #333; text-decoration: line-through; }
-
-        /* Buttons */
-        .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; margin-bottom: 10px; transition: 0.2s; font-size: 1em; }
-        .btn:hover { transform: scale(1.02); background: #ffbb33; }
-        .btn-apply { background: #5555ff; color: white; margin-top: 10px; margin-bottom: 15px; }
         
-        /* Text-Link für Website */
-        .link-web { display: block; color: #aaa; text-decoration: none; font-size: 0.9em; margin-top: 5px; transition: 0.3s; cursor: pointer; }
+        .ip { 
+            background: #000; 
+            padding: 15px; 
+            font-family: monospace; 
+            border-radius: 10px; 
+            color: #555; 
+            margin-bottom: 25px; 
+            border: 1px solid #333; 
+            text-decoration: line-through; 
+        }
+
+        /* Buttons & Inputs */
+        .btn { 
+            display: inline-block; 
+            background: #ffaa00; 
+            color: black; 
+            padding: 12px 25px; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            cursor: pointer; 
+            border: none; 
+            width: 100%; 
+            box-sizing: border-box; 
+            margin-bottom: 10px; 
+            transition: 0.2s; 
+            font-size: 1em; 
+        }
+        .btn:hover { transform: scale(1.02); background: #ffbb33; }
+        .btn-apply { background: #5555ff; color: white; margin-top: 10px; }
+        
+        input, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border-radius: 8px; 
+            border: 1px solid #444; 
+            background: #333; 
+            color: white; 
+            box-sizing: border-box; 
+            font-family: inherit;
+            font-size: 1em;
+        }
+        
+        textarea { 
+            resize: none; /* Verhindert Vergrößern/Verkleinern */
+            min-height: 110px; 
+        }
+
+        /* Website Link Design */
+        .link-web { 
+            display: block; 
+            color: #aaa; 
+            text-decoration: none; 
+            font-size: 0.9em; 
+            margin: 15px 0; 
+            transition: 0.3s; 
+            cursor: pointer; 
+        }
         .link-web:hover { color: #ffaa00; text-decoration: underline; }
 
-        .btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 25px; }
+        .btn-logout { 
+            background: transparent; 
+            color: #ff4444; 
+            border: 1px solid #ff4444; 
+            margin-top: 20px; 
+        }
         .btn-logout:hover { background: #ff4444; color: white; }
 
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; }
         .hidden { display: none; }
         .link-toggle { color: #ffaa00; cursor: pointer; text-decoration: underline; }
     </style>
@@ -78,8 +204,7 @@
         
         <span class="link-web" onclick="window.open('https://DEINE-WEBSEITE.de', '_blank')">🌐 Weiter zur Website</span>
         
-        <button id="guest-login-btn" class="btn" style="background: transparent; color: #ffaa00; border: 1px solid #ffaa00; margin-top: 25px;" onclick="openAuth()">Anmelden / Registrieren</button>
-        
+        <button id="guest-login-btn" class="btn" style="background: transparent; color: #ffaa00; border: 1px solid #ffaa00; margin-top: 10px;" onclick="openAuth()">Anmelden / Registrieren</button>
         <button id="user-logout-btn" class="btn btn-logout hidden" onclick="handleLogout()">Abmelden</button>
     </div>
 
@@ -90,21 +215,22 @@
                 <input type="text" name="name" placeholder="Echter Name" required>
                 <input type="text" name="mc_name" placeholder="Minecraft Name" required>
                 <input type="number" name="age" placeholder="Alter" required>
-                <textarea name="reason" rows="4" placeholder="Warum willst du ins Team?" style="width:100%; background:#333; color:white; border-radius:8px; padding:10px; margin-bottom:10px; border:1px solid #444;" required></textarea>
+                <textarea name="message" placeholder="Warum willst du ins Team?" required></textarea>
                 <button type="submit" id="submit-btn" class="btn">Absenden</button>
             </form>
-            <button class="btn" style="background:#444; color:white;" onclick="showMainPage()">Zurück</button>
+            <button class="btn" style="background:#444; color:white; margin-top: 5px;" onclick="showMainPage()">Zurück</button>
         </div>
 
         <div id="success-box" class="hidden">
             <h1>Erfolgreich!</h1>
-            <p>Wir haben deine Nachricht erhalten.</p>
-            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" style="background:#7289da; color:white; padding:15px; display:block; text-decoration:none; border-radius:8px; font-weight:bold; margin-top:10px;">➡️ Discord beitreten</a>
-            <button class="btn" style="background:#444; color:white; margin-top: 20px;" onclick="location.reload()">Startseite</button>
+            <p style="color: #55ff55; font-weight: bold;">Deine Bewerbung wurde verschickt.</p>
+            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" style="background:#7289da; color:white; padding:15px; display:block; text-decoration:none; border-radius:8px; font-weight:bold; margin-top:15px;">➡️ ReToX Discord beitreten</a>
+            <button class="btn" style="background:#444; color:white; margin-top: 25px;" onclick="location.reload()">Zur Startseite</button>
         </div>
     </div>
 
     <script>
+        // Overlay Management
         function closeAuth() { document.getElementById('auth-overlay').classList.add('hidden'); }
         function openAuth() { document.getElementById('auth-overlay').classList.remove('hidden'); }
         function toggleAuth(type) {
@@ -117,13 +243,14 @@
             }
         }
 
+        // Auth Logik
         function handleRegister() {
             const u = document.getElementById('reg-user').value;
             const p = document.getElementById('reg-pass').value;
             if(u && p) {
                 localStorage.setItem('retox_u', u);
                 localStorage.setItem('retox_p', p);
-                alert("Account erstellt! Bitte logge dich jetzt ein.");
+                alert("Account erstellt! Logge dich jetzt ein.");
                 toggleAuth('log');
             }
         }
@@ -132,26 +259,21 @@
             const u = document.getElementById('login-user').value;
             const p = document.getElementById('login-pass').value;
             if(u === localStorage.getItem('retox_u') && p === localStorage.getItem('retox_p')) {
-                loginSuccess(u);
-            } else {
-                alert("Daten falsch!");
-            }
-        }
-
-        function loginSuccess(username) {
-            document.getElementById('welcome-text').innerText = "Hallo, " + username + "!";
-            document.getElementById('guest-login-btn').classList.add('hidden');
-            document.getElementById('user-logout-btn').classList.remove('hidden');
-            closeAuth();
+                document.getElementById('welcome-text').innerText = "Hallo, " + u + "!";
+                document.getElementById('guest-login-btn').classList.add('hidden');
+                document.getElementById('user-logout-btn').classList.remove('hidden');
+                closeAuth();
+            } else { alert("Daten ungültig!"); }
         }
 
         function handleLogout() {
             document.getElementById('welcome-text').innerText = "ReToX Company";
             document.getElementById('guest-login-btn').classList.remove('hidden');
             document.getElementById('user-logout-btn').classList.add('hidden');
-            alert("Erfolgreich abgemeldet!");
+            alert("Abgemeldet!");
         }
 
+        // Navigation
         function showApplyPage() {
             document.getElementById('main-page').classList.add('hidden');
             document.getElementById('apply-page').classList.remove('hidden');
@@ -161,6 +283,7 @@
             document.getElementById('main-page').classList.remove('hidden');
         }
 
+        // Formspree AJAX (Verhindert Weiterleitung)
         const form = document.getElementById("apply-form");
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
