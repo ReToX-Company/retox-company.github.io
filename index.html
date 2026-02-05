@@ -25,10 +25,10 @@
     <div class="container" id="main-page">
         <h1>ReToX Company</h1>
         <div class="work-notice">⚠️ SERVER AKTUELL IM AUFBAU ⚠️</div>
-        <p>Wir bauen gerade das Netzwerk auf. Schau bald wieder vorbei!</p>
+        <p>Wir arbeiten gerade an der Technik. Joinen ist aktuell noch nicht möglich.</p>
         <div class="ip">RETOX-NETWORK.DDNS.NET</div>
-        <p>Status: <span style="color: #ffaa00; font-weight: bold;">BAUSTELLE</span></p>
-        <button class="btn btn-apply" onclick="showApply()">✨ Jetzt bewerben</button>
+        <p>Status: <span style="color: #ffaa00; font-weight: bold;">IN ARBEIT...</span></p>
+        <button class="btn btn-apply" onclick="showApply()">✨ Vorab bewerben</button>
     </div>
 
     <div class="container hidden" id="apply-page">
@@ -36,13 +36,13 @@
         <p>Werde Teil des Teams!</p>
         
         <form id="apply-form" action="https://formspree.io/f/xwvnewol" method="POST">
-            <label>Echter Name</label>
+            <label>Dein Name</label>
             <input type="text" name="name" required>
-            <label>Minecraft Name</label>
+            <label>Minecraft Name (IGN)</label>
             <input type="text" name="mc_name" required>
             <label>Alter</label>
             <input type="number" name="age" required>
-            <label>Deine Stärken (Build/Dev/Support)</label>
+            <label>Was kannst du am besten? (Build/Dev/Support)</label>
             <textarea name="reason" rows="4" required></textarea>
             
             <button type="submit" id="submit-btn" class="btn">Bewerbung absenden</button>
@@ -54,7 +54,7 @@
     </div>
 
     <script>
-        // Navigation zwischen den Seiten
+        // Navigation
         function showApply() {
             document.getElementById('main-page').classList.add('hidden');
             document.getElementById('apply-page').classList.remove('hidden');
@@ -62,13 +62,12 @@
         function showMain() {
             document.getElementById('apply-page').classList.add('hidden');
             document.getElementById('main-page').classList.remove('hidden');
-            // Status zurücksetzen
             const status = document.getElementById('status-message');
             status.className = '';
             status.innerHTML = '';
         }
 
-        // Formular-Versand ohne Neuladen (AJAX)
+        // AJAX Versand (Kein Login/Passwort nötig)
         const form = document.getElementById("apply-form");
         
         async function handleSubmit(event) {
@@ -92,22 +91,15 @@
               btn.innerHTML = "Absenden";
               btn.disabled = false;
             } else {
-              response.json().then(data => {
-                if (Object.hasOwn(data, 'errors')) {
-                  status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
-                } else {
-                  status.innerHTML = "❌ Hoppla! Da gab es ein Problem.";
-                }
-                status.className = "error";
-                btn.disabled = false;
-                btn.innerHTML = "Absenden";
-              })
+              status.innerHTML = "❌ Fehler! Bitte Formspree-Dashboard prüfen.";
+              status.className = "error";
+              btn.disabled = false;
+              btn.innerHTML = "Absenden";
             }
           }).catch(error => {
-            status.innerHTML = "❌ Fehler beim Senden.";
+            status.innerHTML = "❌ Verbindung fehlgeschlagen.";
             status.className = "error";
             btn.disabled = false;
-            btn.innerHTML = "Absenden";
           });
         }
         form.addEventListener("submit", handleSubmit)
