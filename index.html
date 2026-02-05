@@ -7,16 +7,15 @@
     <style>
         body { background: #111; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
         
-        /* Haupt-Container auf der Webseite */
+        /* Haupt-Container */
         .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 0 30px rgba(255, 170, 0, 0.2); position: relative; }
         
         h1 { color: #ffaa00; font-size: 2.5em; text-transform: uppercase; text-shadow: 0 0 15px rgba(255, 170, 0, 0.6), 2px 2px #000; margin-bottom: 10px; }
 
-        /* Login-Overlay (Das Fenster das drüber schwebt) */
+        /* Login-Overlay */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; }
         .login-box { background: #222; padding: 40px 30px; border-radius: 20px; border: 2px solid #ffaa00; width: 90%; max-width: 400px; position: relative; text-align: center; }
         
-        /* Das Schließen-X */
         .close-x { position: absolute; top: 15px; right: 20px; color: #ffaa00; font-size: 24px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .close-x:hover { color: white; transform: scale(1.2); }
 
@@ -31,7 +30,8 @@
         .btn:hover { transform: scale(1.02); background: #ffbb33; }
         .btn-apply { background: #5555ff; color: white; }
         .btn-web { background: #444; color: white; }
-        .btn-discord { background: #7289da; color: white; font-size: 1.2em; padding: 20px; margin-top: 20px; display: block; text-decoration: none; border-radius: 8px; }
+        .btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 20px; }
+        .btn-logout:hover { background: #ff4444; color: white; }
 
         input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; }
         .hidden { display: none; }
@@ -74,6 +74,8 @@
         <button class="btn btn-apply" onclick="showApplyPage()">✨ Jetzt bewerben</button>
         
         <button id="guest-login-btn" class="btn" style="background: transparent; color: #ffaa00; border: 1px solid #ffaa00; margin-top: 20px;" onclick="openAuth()">Anmelden / Registrieren</button>
+        
+        <button id="user-logout-btn" class="btn btn-logout hidden" onclick="handleLogout()">Abmelden</button>
     </div>
 
     <div class="container hidden" id="apply-page">
@@ -92,19 +94,15 @@
         <div id="success-box" class="hidden">
             <h1>Erfolgreich!</h1>
             <p>Wir haben deine Nachricht erhalten.</p>
-            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn-discord">➡️ Discord beitreten</a>
+            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" style="background:#7289da; color:white; padding:15px; display:block; text-decoration:none; border-radius:8px; font-weight:bold; margin-top:10px;">➡️ Discord beitreten</a>
             <button class="btn btn-web" style="margin-top: 20px;" onclick="location.reload()">Startseite</button>
         </div>
     </div>
 
     <script>
         // Overlay Funktionen
-        function closeAuth() {
-            document.getElementById('auth-overlay').classList.add('hidden');
-        }
-        function openAuth() {
-            document.getElementById('auth-overlay').classList.remove('hidden');
-        }
+        function closeAuth() { document.getElementById('auth-overlay').classList.add('hidden'); }
+        function openAuth() { document.getElementById('auth-overlay').classList.remove('hidden'); }
         function toggleAuth(type) {
             if(type === 'reg') {
                 document.getElementById('login-form').classList.add('hidden');
@@ -131,12 +129,24 @@
             const u = document.getElementById('login-user').value;
             const p = document.getElementById('login-pass').value;
             if(u === localStorage.getItem('retox_u') && p === localStorage.getItem('retox_p')) {
-                document.getElementById('welcome-text').innerText = "Hallo, " + u + "!";
-                document.getElementById('guest-login-btn').classList.add('hidden');
-                closeAuth();
+                loginSuccess(u);
             } else {
                 alert("Daten falsch!");
             }
+        }
+
+        function loginSuccess(username) {
+            document.getElementById('welcome-text').innerText = "Hallo, " + username + "!";
+            document.getElementById('guest-login-btn').classList.add('hidden');
+            document.getElementById('user-logout-btn').classList.remove('hidden');
+            closeAuth();
+        }
+
+        function handleLogout() {
+            document.getElementById('welcome-text').innerText = "ReToX Company";
+            document.getElementById('guest-login-btn').classList.remove('hidden');
+            document.getElementById('user-logout-btn').classList.add('hidden');
+            alert("Erfolgreich abgemeldet!");
         }
 
         // Seiten-Navigation
