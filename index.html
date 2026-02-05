@@ -37,49 +37,15 @@
             margin-bottom: 5px; 
         }
 
-        /* User-Begrüßung */
         .user-badge {
-            color: #aaa;
+            color: #ffaa00;
             font-size: 0.9em;
             margin-bottom: 10px;
             font-style: italic;
+            font-weight: bold;
         }
 
-        .overlay { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.85); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 1000; 
-        }
-        .login-box { 
-            background: #222; 
-            padding: 40px 30px; 
-            border-radius: 20px; 
-            border: 2px solid #ffaa00; 
-            width: 90%; 
-            max-width: 400px; 
-            position: relative; 
-            text-align: center; 
-        }
-        
-        .close-x { 
-            position: absolute; 
-            top: 15px; 
-            right: 20px; 
-            color: #ffaa00; 
-            font-size: 24px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: 0.3s; 
-        }
-        .close-x:hover { color: white; transform: scale(1.2); }
-
+        /* Status & IP */
         .status-wrapper { 
             display: flex; 
             align-items: center; 
@@ -111,6 +77,7 @@
             text-decoration: line-through; 
         }
 
+        /* Buttons & Navigation */
         .btn { 
             display: inline-block; 
             background: #ffaa00; 
@@ -130,24 +97,6 @@
         .btn:hover { transform: scale(1.02); background: #ffbb33; }
         .btn-apply { background: #5555ff; color: white; margin-top: 10px; }
         
-        input, textarea { 
-            width: 100%; 
-            padding: 12px; 
-            margin: 10px 0; 
-            border-radius: 8px; 
-            border: 1px solid #444; 
-            background: #333; 
-            color: white; 
-            box-sizing: border-box; 
-            font-family: inherit;
-            font-size: 1em;
-        }
-        
-        textarea { 
-            resize: none; 
-            min-height: 110px; 
-        }
-
         .link-web { 
             display: block; 
             color: #aaa; 
@@ -159,16 +108,47 @@
         }
         .link-web:hover { color: #ffaa00; text-decoration: underline; }
 
-        .btn-logout { 
-            background: transparent; 
-            color: #ff4444; 
-            border: 1px solid #ff4444; 
-            margin-top: 20px; 
+        /* Inhaltsverzeichnis Style */
+        .content-list {
+            text-align: left;
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
         }
-        .btn-logout:hover { background: #ff4444; color: white; }
+        .content-list li {
+            background: #333;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ffaa00;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .content-list li:hover {
+            background: #444;
+            transform: translateX(5px);
+        }
+        .content-list h3 {
+            margin: 0;
+            color: #ffaa00;
+            font-size: 1.1em;
+        }
+        .content-list p {
+            margin: 5px 0 0 0;
+            font-size: 0.85em;
+            color: #ccc;
+        }
 
+        /* Formular & Overlay */
+        input, textarea { 
+            width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-family: inherit;
+        }
+        textarea { resize: none; min-height: 110px; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .login-box { background: #222; padding: 40px 30px; border-radius: 20px; border: 2px solid #ffaa00; width: 90%; max-width: 400px; position: relative; text-align: center; }
+        .close-x { position: absolute; top: 15px; right: 20px; color: #ffaa00; font-size: 24px; font-weight: bold; cursor: pointer; }
         .hidden { display: none; }
-        .link-toggle { color: #ffaa00; cursor: pointer; text-decoration: underline; }
+        .btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -180,71 +160,89 @@
             <input type="text" id="login-user" placeholder="Benutzername">
             <input type="password" id="login-pass" placeholder="Passwort">
             <button class="btn" onclick="handleLogin()">Einloggen</button>
-            <p>Neu hier? <span class="link-toggle" onclick="toggleAuth('reg')">Registrieren</span></p>
+            <p>Neu hier? <span style="color:#ffaa00; cursor:pointer;" onclick="toggleAuth('reg')">Registrieren</span></p>
         </div>
-
         <div class="login-box hidden" id="register-form">
             <span class="close-x" onclick="closeAuth()">×</span>
             <h1>Registrieren</h1>
             <input type="text" id="reg-user" placeholder="Wunsch-Name">
             <input type="password" id="reg-pass" placeholder="Passwort">
             <button class="btn" onclick="handleRegister()">Account erstellen</button>
-            <p>Hast du schon einen? <span class="link-toggle" onclick="toggleAuth('log')">Zum Login</span></p>
+            <p>Schon dabei? <span style="color:#ffaa00; cursor:pointer;" onclick="toggleAuth('log')">Zum Login</span></p>
         </div>
     </div>
 
     <div class="container" id="main-page">
         <h1>ReToX Company</h1>
-        
         <div id="user-greeting" class="user-badge hidden"></div>
         
         <div class="status-wrapper">
             <span class="status-dot"></span>
             <span>Server in Arbeit...</span>
         </div>
-
         <div class="ip">RETOX-NETWORK.DDNS.NET</div>
         
-        <button class="btn btn-apply" onclick="showApplyPage()">✨ Jetzt bewerben</button>
+        <button class="btn btn-apply" onclick="showPage('apply-page')">✨ Jetzt bewerben</button>
+        <span class="link-web" onclick="showPage('info-page')">🌐 Weiter zur Website</span>
         
-        <span class="link-web" onclick="window.open('https://DEINE-WEBSEITE.de', '_blank')">🌐 Weiter zur Website</span>
-        
-        <button id="guest-login-btn" class="btn" style="background: transparent; color: #ffaa00; border: 1px solid #ffaa00; margin-top: 10px;" onclick="openAuth()">Anmelden / Registrieren</button>
+        <button id="guest-login-btn" class="btn" style="background: transparent; color: #ffaa00; border: 1px solid #ffaa00;" onclick="openAuth()">Anmelden / Registrieren</button>
         <button id="user-logout-btn" class="btn btn-logout hidden" onclick="handleLogout()">Abmelden</button>
     </div>
 
-    <div class="container hidden" id="apply-page">
-        <div id="form-container">
-            <h1>Bewerbung</h1>
-            <form id="apply-form" action="https://formspree.io/f/xwvnewol" method="POST">
-                <input type="text" name="name" placeholder="Echter Name" required>
-                <input type="text" name="mc_name" placeholder="Minecraft Name" required>
-                <input type="number" name="age" placeholder="Alter" required>
-                <textarea name="message" placeholder="Warum willst du ins Team?" required></textarea>
-                <button type="submit" id="submit-btn" class="btn">Absenden</button>
-            </form>
-            <button class="btn" style="background:#444; color:white; margin-top: 5px;" onclick="showMainPage()">Zurück</button>
-        </div>
+    <div class="container hidden" id="info-page">
+        <h1>Website</h1>
+        <p>Willkommen im Hauptmenü von ReToX.</p>
+        
+        <ul class="content-list">
+            <li>
+                <h3>Über Uns</h3>
+                <p>Erfahre mehr über die Geschichte von ReToX.</p>
+            </li>
+            <li>
+                <h3>Unser Minecraft Server</h3>
+                <p>Alle technischen Daten und Spielmodi.</p>
+            </li>
+            <li>
+                <h3>Unsere Social Kanäle</h3>
+                <p>Folge uns auf Discord, YouTube und mehr.</p>
+            </li>
+            <li>
+                <h3>Unsere Mitarbeiter</h3>
+                <p>Das Team hinter dem Netzwerk.</p>
+            </li>
+        </ul>
+        
+        <button class="btn" style="background:#444; color:white;" onclick="showPage('main-page')">Zurück zum Portal</button>
+    </div>
 
+    <div class="container hidden" id="apply-page">
+        <h1>Bewerbung</h1>
+        <form id="apply-form" action="https://formspree.io/f/xwvnewol" method="POST">
+            <input type="text" name="name" placeholder="Echter Name" required>
+            <input type="text" name="mc_name" placeholder="Minecraft Name" required>
+            <input type="number" name="age" placeholder="Alter" required>
+            <textarea name="message" placeholder="Warum willst du ins Team?" required></textarea>
+            <button type="submit" id="submit-btn" class="btn">Absenden</button>
+        </form>
+        <button class="btn" style="background:#444; color:white; margin-top: 5px;" onclick="showPage('main-page')">Zurück</button>
+        
         <div id="success-box" class="hidden">
-            <h1>Erfolgreich!</h1>
-            <p style="color: #55ff55; font-weight: bold;">Deine Bewerbung wurde verschickt.</p>
-            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" style="background:#7289da; color:white; padding:15px; display:block; text-decoration:none; border-radius:8px; font-weight:bold; margin-top:15px;">➡️ ReToX Discord beitreten</a>
-            <button class="btn" style="background:#444; color:white; margin-top: 25px;" onclick="location.reload()">Zur Startseite</button>
+            <p style="color: #55ff55; font-weight: bold;">Verschickt!</p>
+            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn" style="background:#7289da; color:white;">Discord beitreten</a>
         </div>
     </div>
 
     <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
         function closeAuth() { document.getElementById('auth-overlay').classList.add('hidden'); }
         function openAuth() { document.getElementById('auth-overlay').classList.remove('hidden'); }
         function toggleAuth(type) {
-            if(type === 'reg') {
-                document.getElementById('login-form').classList.add('hidden');
-                document.getElementById('register-form').classList.remove('hidden');
-            } else {
-                document.getElementById('register-form').classList.add('hidden');
-                document.getElementById('login-form').classList.remove('hidden');
-            }
+            document.getElementById('login-form').classList.toggle('hidden', type === 'reg');
+            document.getElementById('register-form').classList.toggle('hidden', type === 'log');
         }
 
         function handleRegister() {
@@ -253,7 +251,7 @@
             if(u && p) {
                 localStorage.setItem('retox_u', u);
                 localStorage.setItem('retox_p', p);
-                alert("Account erstellt! Logge dich jetzt ein.");
+                alert("Erfolgreich! Logge dich nun ein.");
                 toggleAuth('log');
             }
         }
@@ -265,11 +263,10 @@
                 const greeting = document.getElementById('user-greeting');
                 greeting.innerText = "Hallo, " + u + "!";
                 greeting.classList.remove('hidden');
-                
                 document.getElementById('guest-login-btn').classList.add('hidden');
                 document.getElementById('user-logout-btn').classList.remove('hidden');
                 closeAuth();
-            } else { alert("Daten ungültig!"); }
+            } else { alert("Falsch!"); }
         }
 
         function handleLogout() {
@@ -279,30 +276,17 @@
             alert("Abgemeldet!");
         }
 
-        function showApplyPage() {
-            document.getElementById('main-page').classList.add('hidden');
-            document.getElementById('apply-page').classList.remove('hidden');
-        }
-        function showMainPage() {
-            document.getElementById('apply-page').classList.add('hidden');
-            document.getElementById('main-page').classList.remove('hidden');
-        }
-
-        const form = document.getElementById("apply-form");
-        form.addEventListener("submit", async (event) => {
-            event.preventDefault();
+        document.getElementById("apply-form").addEventListener("submit", function(e) {
+            e.preventDefault();
             const btn = document.getElementById("submit-btn");
-            const data = new FormData(event.target);
-            btn.disabled = true; btn.innerHTML = "Wird gesendet...";
-            fetch(event.target.action, {
+            btn.disabled = true; btn.innerText = "Sende...";
+            fetch(this.action, {
                 method: 'POST',
-                body: data,
+                body: new FormData(this),
                 headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    document.getElementById('form-container').classList.add('hidden');
-                    document.getElementById('success-box').classList.remove('hidden');
-                }
+            }).then(() => {
+                this.classList.add('hidden');
+                document.getElementById('success-box').classList.remove('hidden');
             });
         });
     </script>
