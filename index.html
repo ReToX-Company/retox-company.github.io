@@ -69,23 +69,24 @@
             background: #333; margin-bottom: 15px; padding: 20px; border-radius: 12px; border-left: 5px solid #ffaa00;
             cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); text-align: left; overflow: hidden; max-height: 65px;
         }
-        .content-item.active { background: #ffaa00 !important; max-height: 600px; border-left-color: white; transform: scale(1.02); }
+        .content-item.active { background: #ffaa00 !important; max-height: 800px; border-left-color: white; transform: scale(1.02); }
         .content-item h3 { margin: 0; color: #ffaa00; font-size: 1.2em; }
         .content-item.active h3 { color: #222; }
         .short-desc { margin-top: 8px; font-size: 0.9em; color: #ccc; transition: 0.3s; }
         .content-item.active .short-desc { display: none; }
-        .detail-text { display: none; color: #111; font-size: 1em; line-height: 1.6; margin-top: 10px; animation: fadeIn 0.5s forwards; }
+        .detail-text { display: none; color: #111; font-size: 1em; line-height: 1.5; margin-top: 10px; animation: fadeIn 0.5s forwards; }
         .content-item.active .detail-text { display: block; }
         
-        /* Mitarbeiter Styling */
-        .staff-group { margin-bottom: 10px; padding: 5px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); }
-        .staff-group:last-child { border: none; }
+        /* Mitarbeiter & Server Detail Styling */
+        .staff-group, .server-modi { margin-bottom: 15px; padding: 5px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); }
+        .server-modi:last-child { border: none; }
+        .mode-title { font-weight: bold; text-transform: uppercase; font-size: 0.9em; display: block; color: #222; }
         .rank { font-weight: bold; text-transform: uppercase; font-size: 0.85em; display: block; }
         .rank.owner { color: #aa0000; } 
         .rank.co-owner { color: #ff4444; } 
         .rank.cutter { color: #5555ff; } 
         .rank.dev { color: #55ff55; } 
-        .names { font-weight: 500; font-size: 1.1em; }
+        .names, .mode-desc { font-weight: 500; font-size: 1em; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .hidden { display: none; }
@@ -142,11 +143,26 @@
                 <p class="short-desc">Die Geschichte von ReToX.</p>
                 <div class="detail-text">Wir sind eine Company, die 2024 gegründet wurde. Wir setzen auf Qualität und eine starke Gemeinschaft.</div>
             </li>
+
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unser Minecraft Server</h3>
-                <p class="short-desc">Technik & Spielmodi.</p>
-                <div class="detail-text">IP: RETOX-NETWORK.DDNS.NET <br> Version: 1.20.x <br> Modi: CityBuild & Survival.</div>
+                <p class="short-desc">Entdecke SMP, Survival & Events.</p>
+                <div class="detail-text">
+                    <div class="server-modi">
+                        <span class="mode-title">🔥 ReToX SMP</span>
+                        <span class="mode-desc">Actionreiches Erlebnis mit ausgeprägtem Wirtschaftssystem, PVP, RTP und einem coolen Spawn.</span>
+                    </div>
+                    <div class="server-modi">
+                        <span class="mode-title">🏗️ ReToX Attack (Survival)</span>
+                        <span class="mode-desc">Hier steht die Gemeinschaft im Fokus. Errichte allein oder im Team große Bauwerke in einer freundlichen Umgebung, wo jeder nett zueinander ist.</span>
+                    </div>
+                    <div class="server-modi">
+                        <span class="mode-title">🚀 Demnächst verfügbar</span>
+                        <span class="mode-desc">Citybuild-Server & Custom Events wie spannende PVP-Turniere!</span>
+                    </div>
+                </div>
             </li>
+
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unsere Social Kanäle</h3>
                 <p class="short-desc">Discord & YouTube.</p>
