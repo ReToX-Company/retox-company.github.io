@@ -69,7 +69,7 @@
             background: #333; margin-bottom: 15px; padding: 20px; border-radius: 12px; border-left: 5px solid #ffaa00;
             cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); text-align: left; overflow: hidden; max-height: 65px;
         }
-        .content-item.active { background: #ffaa00 !important; max-height: 800px; border-left-color: white; transform: scale(1.02); }
+        .content-item.active { background: #ffaa00 !important; max-height: 850px; border-left-color: white; transform: scale(1.02); }
         .content-item h3 { margin: 0; color: #ffaa00; font-size: 1.2em; }
         .content-item.active h3 { color: #222; }
         .short-desc { margin-top: 8px; font-size: 0.9em; color: #ccc; transition: 0.3s; }
@@ -77,6 +77,13 @@
         .detail-text { display: none; color: #111; font-size: 1em; line-height: 1.5; margin-top: 10px; animation: fadeIn 0.5s forwards; }
         .content-item.active .detail-text { display: block; }
         
+        /* Social Media Styling */
+        .social-link { display: block; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; margin-bottom: 8px; text-decoration: none; color: #111; font-weight: bold; transition: 0.3s; border-left: 4px solid #222; }
+        .social-link:hover { background: rgba(0,0,0,0.25); transform: translateX(5px); }
+        .social-link.upcoming { color: #666; border-left-color: #777; cursor: default; }
+        .social-link.upcoming:hover { transform: none; background: rgba(0,0,0,0.15); }
+        .tag { font-size: 0.7em; background: #444; color: white; padding: 2px 6px; border-radius: 4px; margin-left: 10px; text-transform: uppercase; }
+
         /* Mitarbeiter & Server Detail Styling */
         .staff-group, .server-modi { margin-bottom: 15px; padding: 5px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); }
         .server-modi:last-child { border: none; }
@@ -154,20 +161,27 @@
                     </div>
                     <div class="server-modi">
                         <span class="mode-title">🏗️ ReToX Attack (Survival)</span>
-                        <span class="mode-desc">Hier steht die Gemeinschaft im Fokus. Errichte allein oder im Team große Bauwerke in einer freundlichen Umgebung, wo jeder nett zueinander ist.</span>
+                        <span class="mode-desc">Hier steht die Gemeinschaft im Fokus. Errichte allein oder im Team große Bauwerke in einer freundlichen Umgebung.</span>
                     </div>
                     <div class="server-modi">
-                        <span class="mode-title">🚀 Demnächst verfügbar</span>
-                        <span class="mode-desc">Citybuild-Server & Custom Events wie spannende PVP-Turniere!</span>
+                        <span class="mode-title">🚀 Demnächst</span>
+                        <span class="mode-desc">Citybuild & PVP Events.</span>
                     </div>
                 </div>
             </li>
 
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unsere Social Kanäle</h3>
-                <p class="short-desc">Discord & YouTube.</p>
-                <div class="detail-text">Discord: discord.gg/retox <br> YouTube: ReToX Company Official</div>
+                <p class="short-desc">Folge uns auf allen Plattformen.</p>
+                <div class="detail-text">
+                    <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="social-link">💬 Discord</a>
+                    <a href="https://youtube.com/@retox_company?si=JOvO3NTVKhga1mWn" target="_blank" class="social-link">🎬 YouTube</a>
+                    <div class="social-link upcoming">📸 Instagram <span class="tag">Bald</span></div>
+                    <div class="social-link upcoming">🎵 TikTok <span class="tag">In Kürze</span></div>
+                    <div class="social-link upcoming">🎥 Twitch <span class="tag">Coming Soon</span></div>
+                </div>
             </li>
+
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unsere Mitarbeiter</h3>
                 <p class="short-desc">Das Team hinter der Company</p>
