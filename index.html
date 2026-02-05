@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReToX Company | In Arbeit</title>
+    <title>ReToX Company | Network</title>
     <style>
         body { background: #111; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 0 20px rgba(255, 170, 0, 0.1); transition: 0.3s; }
+        .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 0 20px rgba(255, 170, 0, 0.1); }
         h1 { color: #ffaa00; margin-top: 0; text-shadow: 2px 2px #000; }
         .work-notice { font-weight: bold; color: #ffaa00; margin-bottom: 20px; border: 1px dashed #ffaa00; padding: 10px; }
         .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin: 20px 0; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
-        .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; font-size: 1em; }
+        
+        .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; font-size: 1em; margin-bottom: 10px; transition: 0.2s; }
+        .btn:hover { transform: scale(1.02); opacity: 0.9; }
         .btn-apply { background: #5555ff; color: white; margin-top: 15px; }
+        .btn-info { background: #555; color: white; }
+        .btn-back { background: #444; color: white; margin-top: 15px; }
+
         input, textarea { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; }
         label { display: block; text-align: left; font-size: 0.8em; color: #aaa; margin-top: 10px; }
         .hidden { display: none; }
-        #status-message { margin-top: 20px; font-weight: bold; padding: 10px; border-radius: 5px; display: none; }
-        .success { background: #004400; color: #55ff55; border: 1px solid #55ff55; display: block !important; }
-        .error { background: #440000; color: #ff5555; border: 1px solid #ff5555; display: block !important; }
+        .info-text { text-align: left; line-height: 1.6; color: #ccc; }
     </style>
 </head>
 <body>
@@ -25,85 +28,56 @@
     <div class="container" id="main-page">
         <h1>ReToX Company</h1>
         <div class="work-notice">⚠️ SERVER AKTUELL IM AUFBAU ⚠️</div>
-        <p>Wir arbeiten gerade an der Technik. Joinen ist aktuell noch nicht möglich.</p>
         <div class="ip">RETOX-NETWORK.DDNS.NET</div>
-        <p>Status: <span style="color: #ffaa00; font-weight: bold;">IN ARBEIT...</span></p>
-        <button class="btn btn-apply" onclick="showApply()">✨ Vorab bewerben</button>
+        
+        <button class="btn btn-info" onclick="showPage('info-page')">ℹ️ Weitere Infos</button>
+        <button class="btn btn-apply" onclick="showPage('apply-page')">✨ Jetzt bewerben</button>
+    </div>
+
+    <div class="container hidden" id="info-page">
+        <h1>Informationen</h1>
+        <div class="info-text">
+            <p><strong>Über uns:</strong><br>ReToX Company wird ein einzigartiges Minecraft-Netzwerk mit Fokus auf Qualität und Spielspaß.</p>
+            <p><strong>Was wir suchen:</strong><br>Wir suchen aktuell Builder, Developer und Supporter, die Lust haben, von Anfang an dabei zu sein.</p>
+        </div>
+        <button class="btn btn-back" onclick="showPage('main-page')">Zurück</button>
     </div>
 
     <div class="container hidden" id="apply-page">
         <h1>Bewerbung</h1>
-        <p>Werde Teil des Teams!</p>
+        <p>Nach dem Absenden wirst du automatisch zu unserem Discord weitergeleitet.</p>
         
-        <form id="apply-form" action="https://formspree.io/f/xwvnewol" method="POST">
-            <label>Dein Name</label>
+        <form action="https://formspree.io/f/xwvnewol" method="POST">
+            <input type="hidden" name="_next" value="https://discord.gg/JwJmq2zFtm">
+            <input type="hidden" name="_subject" value="Neue Team-Bewerbung!">
+            
+            <label>Echter Name</label>
             <input type="text" name="name" required>
-            <label>Minecraft Name (IGN)</label>
+            
+            <label>Minecraft Name</label>
             <input type="text" name="mc_name" required>
+            
             <label>Alter</label>
             <input type="number" name="age" required>
-            <label>Was kannst du am besten? (Build/Dev/Support)</label>
+            
+            <label>Was kannst du? (Build/Dev/Support)</label>
             <textarea name="reason" rows="4" required></textarea>
             
-            <button type="submit" id="submit-btn" class="btn">Bewerbung absenden</button>
+            <button type="submit" class="btn">Bewerbung absenden & Discord joinen</button>
         </form>
-
-        <div id="status-message"></div>
         
-        <button id="back-btn" class="btn" style="background:#444; color:white; margin-top:15px;" onclick="showMain()">Zurück</button>
+        <button class="btn btn-back" onclick="showPage('main-page')">Zurück</button>
     </div>
 
     <script>
-        // Navigation
-        function showApply() {
+        // Funktion zum Wechseln der Seiten
+        function showPage(pageId) {
             document.getElementById('main-page').classList.add('hidden');
-            document.getElementById('apply-page').classList.remove('hidden');
-        }
-        function showMain() {
+            document.getElementById('info-page').classList.add('hidden');
             document.getElementById('apply-page').classList.add('hidden');
-            document.getElementById('main-page').classList.remove('hidden');
-            const status = document.getElementById('status-message');
-            status.className = '';
-            status.innerHTML = '';
+            
+            document.getElementById(pageId).classList.remove('hidden');
         }
-
-        // AJAX Versand (Kein Login/Passwort nötig)
-        const form = document.getElementById("apply-form");
-        
-        async function handleSubmit(event) {
-          event.preventDefault();
-          const status = document.getElementById("status-message");
-          const btn = document.getElementById("submit-btn");
-          const data = new FormData(event.target);
-          
-          btn.disabled = true;
-          btn.innerHTML = "Wird gesendet...";
-
-          fetch(event.target.action, {
-            method: form.method,
-            body: data,
-            headers: { 'Accept': 'application/json' }
-          }).then(response => {
-            if (response.ok) {
-              status.innerHTML = "✅ Bewerbung erfolgreich gesendet!";
-              status.className = "success";
-              form.reset();
-              btn.innerHTML = "Absenden";
-              btn.disabled = false;
-            } else {
-              status.innerHTML = "❌ Fehler! Bitte Formspree-Dashboard prüfen.";
-              status.className = "error";
-              btn.disabled = false;
-              btn.innerHTML = "Absenden";
-            }
-          }).catch(error => {
-            status.innerHTML = "❌ Verbindung fehlgeschlagen.";
-            status.className = "error";
-            btn.disabled = false;
-          });
-        }
-        form.addEventListener("submit", handleSubmit)
     </script>
-
 </body>
 </html>
