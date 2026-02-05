@@ -17,7 +17,6 @@
             overflow-x: hidden; 
         }
         
-        /* Gemeinsamer Container-Style */
         .container { 
             background: #222; 
             padding: 30px; 
@@ -60,15 +59,11 @@
         .btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 20px; }
         .btn-logout:hover { background: #ff4444; color: white; }
 
-        /* Textlink-Website */
+        /* Website Link */
         .link-web { display: block; color: #aaa; text-decoration: none; font-size: 0.9em; margin: 15px 0; transition: 0.3s; cursor: pointer; }
         .link-web:hover { color: #ffaa00; text-decoration: underline; }
 
-        /* Formular Fixes */
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-family: inherit; }
-        textarea { resize: none; min-height: 110px; }
-
-        /* Inhaltsverzeichnis mit Animation */
+        /* Inhaltsverzeichnis Animation */
         .content-list { list-style: none; padding: 0; margin: 20px 0; }
         .content-item {
             background: #333; margin-bottom: 15px; padding: 20px; border-radius: 12px; border-left: 5px solid #ffaa00;
@@ -79,11 +74,24 @@
         .content-item.active h3 { color: #222; }
         .short-desc { margin-top: 8px; font-size: 0.9em; color: #ccc; transition: 0.3s; }
         .content-item.active .short-desc { display: none; }
-        .detail-text { display: none; color: #111; font-size: 0.95em; line-height: 1.5; margin-top: 10px; animation: fadeIn 0.5s forwards; }
+        .detail-text { display: none; color: #111; font-size: 1em; line-height: 1.6; margin-top: 10px; animation: fadeIn 0.5s forwards; }
         .content-item.active .detail-text { display: block; }
         
+        /* Mitarbeiter Styling */
+        .staff-group { margin-bottom: 10px; padding: 5px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); }
+        .staff-group:last-child { border: none; }
+        .rank { font-weight: bold; text-transform: uppercase; font-size: 0.85em; display: block; }
+        .rank.owner { color: #aa0000; } /* Dunkelrot */
+        .rank.co-owner { color: #ff4444; } /* Hellrot */
+        .rank.cutter { color: #5555ff; } /* Blau */
+        .rank.dev { color: #55ff55; } /* Grün */
+        .names { font-weight: 500; font-size: 1.1em; }
+
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .hidden { display: none; }
+
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-family: inherit; }
+        textarea { resize: none; min-height: 110px; }
     </style>
 </head>
 <body>
@@ -126,39 +134,44 @@
 
     <div class="container hidden" id="info-page">
         <h1>Website</h1>
-        <p>Inhaltsverzeichnis</p>
+        <p>Hauptmenü</p>
         <ul class="content-list">
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Über Uns</h3>
                 <p class="short-desc">Die Geschichte von ReToX.</p>
-                <div class="detail-text">
-                    Wir sind ein Minecraft-Netzwerk, das 2024 gegründet wurde. Unser Ziel ist es, eine faire und freundliche Umgebung für alle Spieler zu schaffen.
-                </div>
+                <div class="detail-text">Wir sind ein Minecraft-Netzwerk, das 2024 gegründet wurde. Wir setzen auf Qualität und eine starke Community.</div>
             </li>
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unser Minecraft Server</h3>
                 <p class="short-desc">Technik & Spielmodi.</p>
-                <div class="detail-text">
-                    IP: RETOX-NETWORK.DDNS.NET <br>
-                    Version: 1.20.x <br>
-                    Modi: CityBuild, Survival, Event-Server.
-                </div>
+                <div class="detail-text">IP: RETOX-NETWORK.DDNS.NET <br> Version: 1.20.x <br> Modi: CityBuild & Survival.</div>
             </li>
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unsere Social Kanäle</h3>
-                <p class="short-desc">Discord & Co.</p>
-                <div class="detail-text">
-                    Besuche uns auf Discord: discord.gg/retox <br>
-                    YouTube: ReToX Company Official
-                </div>
+                <p class="short-desc">Discord & YouTube.</p>
+                <div class="detail-text">Discord: discord.gg/retox <br> YouTube: ReToX Company Official</div>
             </li>
+            
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unsere Mitarbeiter</h3>
-                <p class="short-desc">Das Team.</p>
+                <p class="short-desc">Das Team hinter dem Projekt.</p>
                 <div class="detail-text">
-                    <strong>Inhaber:</strong> DeinName <br>
-                    <strong>Admin:</strong> Teammitglied1 <br>
-                    <strong>Entwickler:</strong> Teammitglied2
+                    <div class="staff-group">
+                        <span class="rank owner">Inhaber</span>
+                        <span class="names">René, Tobis</span>
+                    </div>
+                    <div class="staff-group">
+                        <span class="rank co-owner">Co-Inhaber</span>
+                        <span class="names">Sebastian</span>
+                    </div>
+                    <div class="staff-group">
+                        <span class="rank cutter">Cutter</span>
+                        <span class="names">Ingemar, Jonas</span>
+                    </div>
+                    <div class="staff-group">
+                        <span class="rank dev">Developer</span>
+                        <span class="names"><i>Noch suchend...</i></span>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -179,26 +192,22 @@
         </div>
         <div id="success-box" class="hidden">
             <p style="color: #55ff55; font-weight: bold;">Erfolgreich verschickt!</p>
-            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn" style="background:#7289da; color:white;">Discord beitreten</a>
             <button class="btn" style="background:#444; color:white;" onclick="location.reload()">Startseite</button>
         </div>
     </div>
 
     <script>
-        // Seiten-Navigation
         function showPage(pageId) {
             document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
             document.getElementById(pageId).classList.remove('hidden');
         }
 
-        // Accordion / Inhaltsverzeichnis
         function toggleDetail(element) {
             const isActive = element.classList.contains('active');
             document.querySelectorAll('.content-item').forEach(item => item.classList.remove('active'));
             if (!isActive) element.classList.add('active');
         }
 
-        // Auth Funktionen
         function closeAuth() { document.getElementById('auth-overlay').classList.add('hidden'); }
         function openAuth() { document.getElementById('auth-overlay').classList.remove('hidden'); }
         function toggleAuth(type) {
@@ -237,7 +246,6 @@
             alert("Abgemeldet!");
         }
 
-        // Formspree Handling
         document.getElementById("apply-form").addEventListener("submit", function(e) {
             e.preventDefault();
             const btn = document.getElementById("submit-btn");
