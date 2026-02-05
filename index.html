@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReToX Company | Website</title>
+    <title>ReToX Company | Network</title>
     <style>
-        body { background: #111; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        body { 
+            background: #111; 
+            color: white; 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
         
+        /* Gemeinsamer Container-Style */
         .container { 
             background: #222; 
             padding: 30px; 
@@ -16,134 +27,230 @@
             width: 90%; 
             max-width: 500px; 
             box-shadow: 0 0 30px rgba(255, 170, 0, 0.2); 
-            max-height: 90vh; /* Damit der Container nicht über den Bildschirm wächst */
-            overflow-y: auto;
+            position: relative; 
+            transition: all 0.5s ease;
+        }
+        
+        h1 { 
+            color: #ffaa00; 
+            font-size: 2.5em; 
+            text-transform: uppercase; 
+            text-shadow: 0 0 15px rgba(255, 170, 0, 0.6), 2px 2px #000; 
+            margin-bottom: 5px; 
         }
 
-        h1 { color: #ffaa00; font-size: 2.5em; text-transform: uppercase; text-shadow: 0 0 15px rgba(255, 170, 0, 0.6); margin-bottom: 20px; }
+        .user-badge { color: #ffaa00; font-size: 0.9em; margin-bottom: 10px; font-style: italic; font-weight: bold; }
 
+        /* Login-Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .login-box { background: #222; padding: 40px 30px; border-radius: 20px; border: 2px solid #ffaa00; width: 90%; max-width: 400px; position: relative; text-align: center; }
+        .close-x { position: absolute; top: 15px; right: 20px; color: #ffaa00; font-size: 24px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .close-x:hover { color: white; transform: scale(1.2); }
+
+        /* Status & IP */
+        .status-wrapper { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-weight: bold; color: #ffaa00; }
+        .status-dot { height: 10px; width: 10px; background-color: #ffaa00; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px #ffaa00; animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin-bottom: 25px; border: 1px solid #333; text-decoration: line-through; }
+
+        /* Buttons */
+        .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; margin-bottom: 10px; transition: 0.2s; font-size: 1em; }
+        .btn:hover { transform: scale(1.02); background: #ffbb33; }
+        .btn-apply { background: #5555ff; color: white; margin-top: 10px; }
+        .btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 20px; }
+        .btn-logout:hover { background: #ff4444; color: white; }
+
+        /* Textlink-Website */
+        .link-web { display: block; color: #aaa; text-decoration: none; font-size: 0.9em; margin: 15px 0; transition: 0.3s; cursor: pointer; }
+        .link-web:hover { color: #ffaa00; text-decoration: underline; }
+
+        /* Formular Fixes */
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-family: inherit; }
+        textarea { resize: none; min-height: 110px; }
+
+        /* Inhaltsverzeichnis mit Animation */
         .content-list { list-style: none; padding: 0; margin: 20px 0; }
-
         .content-item {
-            background: #333;
-            margin-bottom: 15px;
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 5px solid #ffaa00;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            position: relative;
-            text-align: left;
-            max-height: 60px; /* Start-Höhe */
-            overflow: hidden;
+            background: #333; margin-bottom: 15px; padding: 20px; border-radius: 12px; border-left: 5px solid #ffaa00;
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); text-align: left; overflow: hidden; max-height: 65px;
         }
-
-        /* Wenn aktiv, wird die Höhenbegrenzung aufgehoben */
-        .content-item.active { 
-            background: #ffaa00 !important; 
-            max-height: 500px; /* Genug Platz für viel Text */
-            transform: scale(1.02);
-            border-left-color: white;
-        }
-
-        .content-item h3 { margin: 0; color: #ffaa00; font-size: 1.2em; transition: 0.3s; }
+        .content-item.active { background: #ffaa00 !important; max-height: 600px; border-left-color: white; transform: scale(1.02); }
+        .content-item h3 { margin: 0; color: #ffaa00; font-size: 1.2em; }
         .content-item.active h3 { color: #222; }
-
-        .short-desc { margin: 8px 0 0 0; font-size: 0.9em; color: #ccc; opacity: 1; transition: 0.3s; }
-        .content-item.active .short-desc { opacity: 0; height: 0; margin: 0; overflow: hidden; }
-
-        /* Detail-Text mit eigenem Scrollbar, falls er EXTREM lang wird */
-        .detail-text {
-            display: none;
-            color: #111;
-            font-size: 0.95em;
-            line-height: 1.5;
-            margin-top: 10px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        .content-item.active .detail-text { display: block; animation: fadeIn 0.5s forwards; }
-
+        .short-desc { margin-top: 8px; font-size: 0.9em; color: #ccc; transition: 0.3s; }
+        .content-item.active .short-desc { display: none; }
+        .detail-text { display: none; color: #111; font-size: 0.95em; line-height: 1.5; margin-top: 10px; animation: fadeIn 0.5s forwards; }
+        .content-item.active .detail-text { display: block; }
+        
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Schicker Scrollbar für lange Texte */
-        .detail-text::-webkit-scrollbar { width: 5px; }
-        .detail-text::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
-
-        .btn-back { display: block; width: 100%; background: #444; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Website</h1>
-        <p>Hauptmenü von ReToX</p>
+    <div class="overlay" id="auth-overlay">
+        <div class="login-box" id="login-form">
+            <span class="close-x" onclick="closeAuth()">×</span>
+            <h1>Login</h1>
+            <input type="text" id="login-user" placeholder="Benutzername">
+            <input type="password" id="login-pass" placeholder="Passwort">
+            <button class="btn" onclick="handleLogin()">Einloggen</button>
+            <p>Neu hier? <span style="color:#ffaa00; cursor:pointer;" onclick="toggleAuth('reg')">Registrieren</span></p>
+        </div>
+        <div class="login-box hidden" id="register-form">
+            <span class="close-x" onclick="closeAuth()">×</span>
+            <h1>Registrieren</h1>
+            <input type="text" id="reg-user" placeholder="Wunsch-Name">
+            <input type="password" id="reg-pass" placeholder="Passwort">
+            <button class="btn" onclick="handleRegister()">Account erstellen</button>
+            <p>Schon dabei? <span style="color:#ffaa00; cursor:pointer;" onclick="toggleAuth('log')">Zum Login</span></p>
+        </div>
+    </div>
 
+    <div class="container" id="main-page">
+        <h1>ReToX Company</h1>
+        <div id="user-greeting" class="user-badge hidden"></div>
+        
+        <div class="status-wrapper">
+            <span class="status-dot"></span>
+            <span>Server in Arbeit...</span>
+        </div>
+        <div class="ip">RETOX-NETWORK.DDNS.NET</div>
+        
+        <button class="btn btn-apply" onclick="showPage('apply-page')">✨ Jetzt bewerben</button>
+        <span class="link-web" onclick="showPage('info-page')">🌐 Weiter zur Website</span>
+        
+        <button id="guest-login-btn" class="btn" style="background: transparent; color: #ffaa00; border: 1px solid #ffaa00; margin-top: 10px;" onclick="openAuth()">Anmelden / Registrieren</button>
+        <button id="user-logout-btn" class="btn btn-logout hidden" onclick="handleLogout()">Abmelden</button>
+    </div>
+
+    <div class="container hidden" id="info-page">
+        <h1>Website</h1>
+        <p>Inhaltsverzeichnis</p>
         <ul class="content-list">
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Über Uns</h3>
-                <p class="short-desc">Erfahre mehr über die Geschichte.</p>
+                <p class="short-desc">Die Geschichte von ReToX.</p>
                 <div class="detail-text">
-                    ReToX Company ist nicht nur ein Name, sondern ein Versprechen. Gegründet 2024, haben wir klein angefangen und sind durch unsere Community gewachsen. <br><br>
-                    Unsere Vision ist es, Gaming und Technik zu verbinden. Wir arbeiten täglich an neuen Features, um das Erlebnis auf unseren Servern zu verbessern. Jedes Teammitglied bringt seine eigenen Stärken ein – von der Entwicklung bis hin zum Support. <br><br>
-                    Wir glauben an Transparenz und Fairness, weshalb unsere Community immer an erster Stelle steht.
+                    Wir sind ein Minecraft-Netzwerk, das 2024 gegründet wurde. Unser Ziel ist es, eine faire und freundliche Umgebung für alle Spieler zu schaffen.
                 </div>
             </li>
-
             <li class="content-item" onclick="toggleDetail(this)">
-                <h3>Minecraft Server</h3>
-                <p class="short-desc">Technische Daten & Modi.</p>
+                <h3>Unser Minecraft Server</h3>
+                <p class="short-desc">Technik & Spielmodi.</p>
                 <div class="detail-text">
-                    <strong>Hardware:</strong> 128GB RAM, Ryzen 9 Prozessor.<br>
-                    <strong>Spielmodi:</strong> <br>
-                    - CityBuild mit echtem Wirtschaftssystem.<br>
-                    - Survival mit speziellen Dungeons.<br>
-                    - Bedwars & Skywars für Action-Fans.<br><br>
-                    Wir nutzen eigene Plugins, um Cheater fernzuhalten und flüssiges Gameplay zu garantieren.
+                    IP: RETOX-NETWORK.DDNS.NET <br>
+                    Version: 1.20.x <br>
+                    Modi: CityBuild, Survival, Event-Server.
                 </div>
             </li>
-
             <li class="content-item" onclick="toggleDetail(this)">
-                <h3>Social Kanäle</h3>
-                <p class="short-desc">Folge uns überall.</p>
+                <h3>Unsere Social Kanäle</h3>
+                <p class="short-desc">Discord & Co.</p>
                 <div class="detail-text">
-                    Tritt unserem Discord bei, um keine Updates zu verpassen. Auf YouTube posten wir Trailer und Tutorials. Instagram nutzen wir für Blicke hinter die Kulissen der ReToX Company.
+                    Besuche uns auf Discord: discord.gg/retox <br>
+                    YouTube: ReToX Company Official
                 </div>
             </li>
-
             <li class="content-item" onclick="toggleDetail(this)">
-                <h3>Mitarbeiter</h3>
-                <p class="short-desc">Das Team hinter ReToX.</p>
+                <h3>Unsere Mitarbeiter</h3>
+                <p class="short-desc">Das Team.</p>
                 <div class="detail-text">
-                    Unsere Hierarchie ist flach, aber strukturiert:<br><br>
-                    <strong>Inhaber:</strong> [Dein Name]<br>
-                    <strong>Admin:</strong> [Name]<br>
-                    <strong>Entwickler:</strong> [Name]<br>
-                    <strong>Supporter:</strong> [Name]<br><br>
-                    Jeder bei uns ist mit Leidenschaft dabei!
+                    <strong>Inhaber:</strong> DeinName <br>
+                    <strong>Admin:</strong> Teammitglied1 <br>
+                    <strong>Entwickler:</strong> Teammitglied2
                 </div>
             </li>
         </ul>
+        <button class="btn" style="background:#444; color:white;" onclick="showPage('main-page')">Zurück zum Portal</button>
+    </div>
 
-        <button class="btn-back" onclick="location.href='index.html'">Zurück zum Portal</button>
+    <div class="container hidden" id="apply-page">
+        <h1>Bewerbung</h1>
+        <div id="form-container">
+            <form id="apply-form" action="https://formspree.io/f/xwvnewol" method="POST">
+                <input type="text" name="name" placeholder="Echter Name" required>
+                <input type="text" name="mc_name" placeholder="Minecraft Name" required>
+                <input type="number" name="age" placeholder="Alter" required>
+                <textarea name="message" placeholder="Warum willst du ins Team?" required></textarea>
+                <button type="submit" id="submit-btn" class="btn">Absenden</button>
+            </form>
+            <button class="btn" style="background:#444; color:white;" onclick="showPage('main-page')">Zurück</button>
+        </div>
+        <div id="success-box" class="hidden">
+            <p style="color: #55ff55; font-weight: bold;">Erfolgreich verschickt!</p>
+            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn" style="background:#7289da; color:white;">Discord beitreten</a>
+            <button class="btn" style="background:#444; color:white;" onclick="location.reload()">Startseite</button>
+        </div>
     </div>
 
     <script>
+        // Seiten-Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        // Accordion / Inhaltsverzeichnis
         function toggleDetail(element) {
             const isActive = element.classList.contains('active');
-            
-            // Schließe alle anderen (für Fokus)
-            document.querySelectorAll('.content-item').forEach(item => {
-                item.classList.remove('active');
-            });
+            document.querySelectorAll('.content-item').forEach(item => item.classList.remove('active'));
+            if (!isActive) element.classList.add('active');
+        }
 
-            // Wenn es nicht schon aktiv war, öffne es jetzt
-            if (!isActive) {
-                element.classList.add('active');
+        // Auth Funktionen
+        function closeAuth() { document.getElementById('auth-overlay').classList.add('hidden'); }
+        function openAuth() { document.getElementById('auth-overlay').classList.remove('hidden'); }
+        function toggleAuth(type) {
+            document.getElementById('login-form').classList.toggle('hidden', type === 'reg');
+            document.getElementById('register-form').classList.toggle('hidden', type === 'log');
+        }
+
+        function handleRegister() {
+            const u = document.getElementById('reg-user').value;
+            const p = document.getElementById('reg-pass').value;
+            if(u && p) {
+                localStorage.setItem('retox_u', u);
+                localStorage.setItem('retox_p', p);
+                alert("Account erstellt!");
+                toggleAuth('log');
             }
         }
+
+        function handleLogin() {
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+            if(u === localStorage.getItem('retox_u') && p === localStorage.getItem('retox_p')) {
+                const greeting = document.getElementById('user-greeting');
+                greeting.innerText = "Hallo, " + u + "!";
+                greeting.classList.remove('hidden');
+                document.getElementById('guest-login-btn').classList.add('hidden');
+                document.getElementById('user-logout-btn').classList.remove('hidden');
+                closeAuth();
+            } else { alert("Falsche Daten!"); }
+        }
+
+        function handleLogout() {
+            document.getElementById('user-greeting').classList.add('hidden');
+            document.getElementById('guest-login-btn').classList.remove('hidden');
+            document.getElementById('user-logout-btn').classList.add('hidden');
+            alert("Abgemeldet!");
+        }
+
+        // Formspree Handling
+        document.getElementById("apply-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const btn = document.getElementById("submit-btn");
+            btn.disabled = true; btn.innerText = "Sende...";
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: { 'Accept': 'application/json' }
+            }).then(() => {
+                document.getElementById('form-container').classList.add('hidden');
+                document.getElementById('success-box').classList.remove('hidden');
+            });
+        });
     </script>
 </body>
 </html>
