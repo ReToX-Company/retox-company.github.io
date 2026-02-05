@@ -6,15 +6,22 @@
     <title>ReToX Company | Network</title>
     <style>
         body { background: #111; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 0 20px rgba(255, 170, 0, 0.1); }
-        h1 { color: #ffaa00; margin-top: 0; text-shadow: 2px 2px #000; }
+        .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 0 30px rgba(255, 170, 0, 0.2); }
         
-        /* IP Anzeige */
-        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin: 20px 0 10px 0; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
-
-        /* Status-Punkt unter der IP */
-        .status-wrapper { display: flex; align-items: center; justify-content: center; margin-bottom: 25px; font-weight: bold; font-size: 1em; color: #aaa; }
-        .status-dot { height: 10px; width: 10px; background-color: #ffaa00; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 8px #ffaa00; animation: blink 1.5s infinite; }
+        /* Hervorgehobener Titel */
+        h1 { 
+            color: #ffaa00; 
+            margin-top: 0; 
+            font-size: 2.5em; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 170, 0, 0.6), 2px 2px #000; 
+            margin-bottom: 10px;
+        }
+        
+        /* Status-Punkt oben */
+        .status-wrapper { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-weight: bold; font-size: 1em; color: #ffaa00; }
+        .status-dot { height: 10px; width: 10px; background-color: #ffaa00; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px #ffaa00; animation: blink 1.5s infinite; }
         
         @keyframes blink {
             0% { opacity: 1; }
@@ -22,9 +29,12 @@
             100% { opacity: 1; }
         }
 
+        /* IP Anzeige */
+        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin-bottom: 25px; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
+        
         /* Buttons */
         .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; font-size: 1em; margin-bottom: 10px; transition: 0.2s; }
-        .btn:hover { transform: scale(1.02); opacity: 0.9; }
+        .btn:hover { transform: scale(1.02); background: #ffbb33; }
         .btn-apply { background: #5555ff; color: white; margin-top: 10px; }
         .btn-info { background: #444; color: white; }
         .btn-discord { background: #7289da; color: white; font-size: 1.2em; padding: 20px; margin-top: 20px; display: block; text-decoration: none; border-radius: 8px; font-weight: bold; }
@@ -43,12 +53,12 @@
     <div class="container" id="main-page">
         <h1>ReToX Company</h1>
         
-        <div class="ip">RETOX-NETWORK.DDNS.NET</div>
-
         <div class="status-wrapper">
             <span class="status-dot"></span>
             <span>Server in Arbeit...</span>
         </div>
+
+        <div class="ip">RETOX-NETWORK.DDNS.NET</div>
         
         <button class="btn btn-info" onclick="showPage('info-page')">ℹ️ Weitere Infos</button>
         <button class="btn btn-apply" onclick="showPage('apply-page')">✨ Jetzt bewerben</button>
@@ -58,7 +68,7 @@
         <h1>Informationen</h1>
         <div class="info-text">
             <p><strong>Status:</strong> Aufbau-Phase.</p>
-            <p><strong>Ziel:</strong> Wir erschaffen einen Ort für die Community mit einzigartigen Features.</p>
+            <p><strong>Info:</strong> Wir arbeiten mit Hochdruck am Netzwerk. Alle News erfährst du auf unserem Discord!</p>
         </div>
         <button class="btn" style="background:#444; color:white; margin-top:15px;" onclick="showPage('main-page')">Zurück</button>
     </div>
@@ -111,7 +121,7 @@
                     document.getElementById('form-container').classList.add('hidden');
                     document.getElementById('success-box').classList.remove('hidden');
                 } else {
-                    alert("Fehler!");
+                    alert("Fehler beim Senden!");
                     btn.disabled = false;
                     btn.innerHTML = "Absenden";
                 }
