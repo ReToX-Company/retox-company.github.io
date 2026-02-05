@@ -11,12 +11,11 @@
         .work-notice { font-weight: bold; color: #ffaa00; margin-bottom: 20px; border: 1px dashed #ffaa00; padding: 10px; }
         .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin: 20px 0; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
         
-        /* Buttons */
         .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; font-size: 1em; margin-bottom: 10px; transition: 0.2s; }
         .btn:hover { transform: scale(1.02); opacity: 0.9; }
         .btn-apply { background: #5555ff; color: white; margin-top: 15px; }
         .btn-info { background: #555; color: white; }
-        .btn-discord { background: #7289da; color: white; font-size: 1.2em; padding: 20px; margin-top: 20px; display: block; }
+        .btn-discord { background: #7289da; color: white; font-size: 1.2em; padding: 20px; margin-top: 20px; display: block; text-decoration: none; border-radius: 8px; font-weight: bold; }
 
         input, textarea { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; }
         label { display: block; text-align: left; font-size: 0.8em; color: #aaa; margin-top: 10px; }
@@ -42,7 +41,7 @@
         <h1>Informationen</h1>
         <div class="info-text">
             <p><strong>Über uns:</strong> ReToX Company wird ein einzigartiges Minecraft-Netzwerk.</p>
-            <p><strong>Joinen:</strong> Aktuell arbeiten wir noch an der Technik. Sobald wir fertig sind, erfährst du es hier oder auf Discord!</p>
+            <p><strong>Joinen:</strong> Aktuell arbeiten wir noch an der Technik. Sobald wir fertig sind, erfährst du es hier!</p>
         </div>
         <button class="btn" style="background:#444; color:white; margin-top:15px;" onclick="showPage('main-page')">Zurück</button>
     </div>
@@ -58,7 +57,7 @@
                 <input type="text" name="mc_name" required>
                 <label>Alter</label>
                 <input type="number" name="age" required>
-                <label>Was kannst du? (Build/Dev/Support)</label>
+                <label>Deine Stärken</label>
                 <textarea name="reason" rows="4" required></textarea>
                 
                 <button type="submit" id="submit-btn" class="btn">Absenden</button>
@@ -67,13 +66,13 @@
         </div>
 
         <div id="success-box" class="hidden">
-            <h1>Vielen Dank!</h1>
-            <p class="success-text">Deine Bewerbung wurde erfolgreich verschickt.</p>
-            <p>Um das Ganze abzuschließen, tritt bitte unserem Discord bei:</p>
+            <h1>Erfolgreich!</h1>
+            <p class="success-text">Deine Bewerbung ist bei uns eingegangen.</p>
+            <p>Klicke jetzt auf den Button, um unserem Discord beizutreten:</p>
             
-            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn btn-discord">➡️ ReToX Discord beitreten</a>
+            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn-discord">➡️ Discord beitreten</a>
             
-            <button class="btn" style="background:#444; color:white; margin-top:30px;" onclick="location.reload()">Zurück zur Startseite</button>
+            <button class="btn" style="background:#444; color:white; margin-top:30px;" onclick="location.reload()">Zur Startseite</button>
         </div>
 
     </div>
@@ -86,10 +85,10 @@
             document.getElementById(pageId).classList.remove('hidden');
         }
 
-        // AJAX Versand
+        // Der AJAX-Trick: Verhindert die Weiterleitung zu Formspree
         const form = document.getElementById("apply-form");
         form.addEventListener("submit", async (event) => {
-            event.preventDefault();
+            event.preventDefault(); // Verhindert das Neuladen der Seite
             const btn = document.getElementById("submit-btn");
             const data = new FormData(event.target);
             
@@ -102,16 +101,16 @@
                 headers: { 'Accept': 'application/json' }
             }).then(response => {
                 if (response.ok) {
-                    // Formular weg, Discord-Button her
+                    // Versteckt das Formular und zeigt den Discord-Button
                     document.getElementById('form-container').classList.add('hidden');
                     document.getElementById('success-box').classList.remove('hidden');
                 } else {
-                    alert("Fehler beim Senden. Bitte versuche es später nochmal.");
+                    alert("Fehler beim Senden. Hast du das Formular bei Formspree schon aktiviert?");
                     btn.disabled = false;
                     btn.innerHTML = "Absenden";
                 }
             }).catch(error => {
-                alert("Verbindung zum Server fehlgeschlagen.");
+                alert("Verbindung fehlgeschlagen.");
                 btn.disabled = false;
                 btn.innerHTML = "Absenden";
             });
