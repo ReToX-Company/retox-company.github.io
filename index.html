@@ -8,9 +8,20 @@
         body { background: #111; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 0 20px rgba(255, 170, 0, 0.1); }
         h1 { color: #ffaa00; margin-top: 0; text-shadow: 2px 2px #000; }
-        .work-notice { font-weight: bold; color: #ffaa00; margin-bottom: 20px; border: 1px dashed #ffaa00; padding: 10px; }
-        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin: 20px 0; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
         
+        /* Status-Punkt Design */
+        .status-wrapper { display: flex; align-items: center; justify-content: center; margin: 20px 0; font-weight: bold; font-size: 1.1em; }
+        .status-dot { height: 12px; width: 12px; background-color: #ffaa00; border-radius: 50%; display: inline-block; margin-right: 10px; box-shadow: 0 0 8px #ffaa00; animation: blink 1.5s infinite; }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin: 10px 0; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
+        
+        /* Buttons */
         .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; font-size: 1em; margin-bottom: 10px; transition: 0.2s; }
         .btn:hover { transform: scale(1.02); opacity: 0.9; }
         .btn-apply { background: #5555ff; color: white; margin-top: 15px; }
@@ -30,7 +41,12 @@
 
     <div class="container" id="main-page">
         <h1>ReToX Company</h1>
-        <div class="work-notice">⚠️ SERVER AKTUELL IM AUFBAU ⚠️</div>
+        
+        <div class="status-wrapper">
+            <span class="status-dot"></span>
+            <span>Server in Arbeit...</span>
+        </div>
+
         <div class="ip">RETOX-NETWORK.DDNS.NET</div>
         
         <button class="btn btn-info" onclick="showPage('info-page')">ℹ️ Weitere Infos</button>
@@ -40,18 +56,17 @@
     <div class="container hidden" id="info-page">
         <h1>Informationen</h1>
         <div class="info-text">
-            <p><strong>Über uns:</strong> ReToX Company wird ein einzigartiges Minecraft-Netzwerk.</p>
-            <p><strong>Joinen:</strong> Aktuell arbeiten wir noch an der Technik. Sobald wir fertig sind, erfährst du es hier!</p>
+            <p><strong>Status:</strong> Das Netzwerk befindet sich im Aufbau.</p>
+            <p><strong>Discord:</strong> Tritt uns bei, um keine Updates zu verpassen!</p>
         </div>
         <button class="btn" style="background:#444; color:white; margin-top:15px;" onclick="showPage('main-page')">Zurück</button>
     </div>
 
     <div class="container hidden" id="apply-page">
-        
         <div id="form-container">
             <h1>Bewerbung</h1>
             <form id="apply-form" action="https://formspree.io/f/xwvnewol" method="POST">
-                <label>Echter Name</label>
+                <label>Name</label>
                 <input type="text" name="name" required>
                 <label>Minecraft Name</label>
                 <input type="text" name="mc_name" required>
@@ -59,7 +74,6 @@
                 <input type="number" name="age" required>
                 <label>Deine Stärken</label>
                 <textarea name="reason" rows="4" required></textarea>
-                
                 <button type="submit" id="submit-btn" class="btn">Absenden</button>
             </form>
             <button class="btn" style="background:#444; color:white; margin-top:10px;" onclick="showPage('main-page')">Zurück</button>
@@ -67,31 +81,29 @@
 
         <div id="success-box" class="hidden">
             <h1>Erfolgreich!</h1>
-            <p class="success-text">Deine Bewerbung ist bei uns eingegangen.</p>
-            <p>Klicke jetzt auf den Button, um unserem Discord beizutreten:</p>
-            
+            <p class="success-text">Bewerbung verschickt.</p>
             <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn-discord">➡️ Discord beitreten</a>
-            
             <button class="btn" style="background:#444; color:white; margin-top:30px;" onclick="location.reload()">Zur Startseite</button>
         </div>
-
     </div>
 
     <script>
         function showPage(pageId) {
             document.getElementById('main-page').classList.add('hidden');
             document.getElementById('info-page').classList.add('hidden');
-            document.getElementById('apply-page').classList.add('hidden');
+            document.getElementById('apply-page').classList.remove('hidden'); // Fix falls nötig
+            
+            // Alles verstecken
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            // Gewünschte Seite zeigen
             document.getElementById(pageId).classList.remove('hidden');
         }
 
-        // Der AJAX-Trick: Verhindert die Weiterleitung zu Formspree
         const form = document.getElementById("apply-form");
         form.addEventListener("submit", async (event) => {
-            event.preventDefault(); // Verhindert das Neuladen der Seite
+            event.preventDefault();
             const btn = document.getElementById("submit-btn");
             const data = new FormData(event.target);
-            
             btn.disabled = true;
             btn.innerHTML = "Wird gesendet...";
 
@@ -101,18 +113,13 @@
                 headers: { 'Accept': 'application/json' }
             }).then(response => {
                 if (response.ok) {
-                    // Versteckt das Formular und zeigt den Discord-Button
                     document.getElementById('form-container').classList.add('hidden');
                     document.getElementById('success-box').classList.remove('hidden');
                 } else {
-                    alert("Fehler beim Senden. Hast du das Formular bei Formspree schon aktiviert?");
+                    alert("Fehler!");
                     btn.disabled = false;
                     btn.innerHTML = "Absenden";
                 }
-            }).catch(error => {
-                alert("Verbindung fehlgeschlagen.");
-                btn.disabled = false;
-                btn.innerHTML = "Absenden";
             });
         });
     </script>
