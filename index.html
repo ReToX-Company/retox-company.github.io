@@ -90,8 +90,9 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .hidden { display: none; }
 
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-family: inherit; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-family: inherit; }
         textarea { resize: none; min-height: 110px; }
+        select { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -139,7 +140,7 @@
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Über Uns</h3>
                 <p class="short-desc">Die Geschichte von ReToX.</p>
-                <div class="detail-text">Wir sind ein Minecraft-Netzwerk, das 2024 gegründet wurde. Wir setzen auf Qualität und eine starke Community.</div>
+                <div class="detail-text">Wir sind eine Company, die 2024 gegründet wurde. Wir setzen auf Qualität und eine starke Gemeinschaft.</div>
             </li>
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unser Minecraft Server</h3>
@@ -151,10 +152,9 @@
                 <p class="short-desc">Discord & YouTube.</p>
                 <div class="detail-text">Discord: discord.gg/retox <br> YouTube: ReToX Company Official</div>
             </li>
-            
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unsere Mitarbeiter</h3>
-                <p class="short-desc">Das Team hinter dem Projekt.</p>
+                <p class="short-desc">Das Team hinter der Company</p>
                 <div class="detail-text">
                     <div class="staff-group">
                         <span class="rank owner">Inhaber</span>
@@ -185,6 +185,17 @@
                 <input type="text" name="name" placeholder="Echter Name" required>
                 <input type="text" name="mc_name" placeholder="Minecraft Name" required>
                 <input type="number" name="age" placeholder="Alter" required>
+                
+                <select name="position" required>
+                    <option value="" disabled selected>Als was möchtest du dich bewerben?</option>
+                    <option value="Supporter">Supporter</option>
+                    <option value="Moderator">Moderator</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Builder">Builder</option>
+                    <option value="Cutter">Cutter</option>
+                    <option value="Designer">Designer</option>
+                </select>
+
                 <textarea name="message" placeholder="Warum willst du ins Team?" required></textarea>
                 <button type="submit" id="submit-btn" class="btn">Absenden</button>
             </form>
