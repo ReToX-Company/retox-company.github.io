@@ -3,109 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReToX Company | Network</title>
+    <title>ReToX Company | Portal</title>
     <style>
         body { background: #111; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 0 30px rgba(255, 170, 0, 0.2); }
+        .container { background: #222; padding: 30px; border-radius: 20px; border: 2px solid #ffaa00; text-align: center; width: 90%; max-width: 450px; box-shadow: 0 0 30px rgba(255, 170, 0, 0.2); }
         
-        /* Hervorgehobener Titel */
-        h1 { 
-            color: #ffaa00; 
-            margin-top: 0; 
-            font-size: 2.5em; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(255, 170, 0, 0.6), 2px 2px #000; 
-            margin-bottom: 10px;
-        }
+        h1 { color: #ffaa00; font-size: 2.2em; text-transform: uppercase; text-shadow: 0 0 15px rgba(255, 170, 0, 0.5); margin-bottom: 20px; }
         
-        /* Status-Punkt oben */
-        .status-wrapper { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-weight: bold; font-size: 1em; color: #ffaa00; }
+        /* Status-Punkt */
+        .status-wrapper { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-weight: bold; color: #ffaa00; }
         .status-dot { height: 10px; width: 10px; background-color: #ffaa00; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px #ffaa00; animation: blink 1.5s infinite; }
-        
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* IP Anzeige */
-        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin-bottom: 25px; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
+        .ip { background: #000; padding: 12px; font-family: monospace; border-radius: 10px; color: #555; margin-bottom: 20px; border: 1px solid #333; text-decoration: line-through; }
         
+        /* Formular Felder */
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; }
+        label { display: block; text-align: left; font-size: 0.85em; color: #aaa; margin-top: 5px; }
+
         /* Buttons */
-        .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; font-size: 1em; margin-bottom: 10px; transition: 0.2s; text-align: center; }
+        .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; margin-bottom: 10px; transition: 0.2s; }
         .btn:hover { transform: scale(1.02); background: #ffbb33; }
-        .btn-apply { background: #5555ff; color: white; margin-top: 10px; }
-        .btn-web { background: #444; color: white; }
-        .btn-discord { background: #7289da; color: white; font-size: 1.2em; padding: 20px; margin-top: 20px; display: block; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        .btn-secondary { background: #444; color: white; }
+        .btn-apply { background: #5555ff; color: white; }
+        .btn-discord { background: #7289da; color: white; padding: 15px; display: block; text-decoration: none; border-radius: 8px; font-weight: bold; }
 
-        input, textarea { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; }
-        label { display: block; text-align: left; font-size: 0.8em; color: #aaa; margin-top: 10px; }
         .hidden { display: none; }
-        
-        #success-box { padding: 20px; }
-        .success-text { color: #55ff55; font-weight: bold; font-size: 1.1em; margin-bottom: 10px; }
+        .link-toggle { color: #ffaa00; cursor: pointer; text-decoration: underline; font-size: 0.9em; }
     </style>
 </head>
 <body>
 
-    <div class="container" id="main-page">
-        <h1>ReToX Company</h1>
-        
+    <div class="container" id="login-page">
+        <h1>Login</h1>
+        <p>Logge dich ein, um fortzufahren.</p>
+        <input type="text" id="login-user" placeholder="Benutzername">
+        <input type="password" id="login-pass" placeholder="Passwort">
+        <button class="btn" onclick="handleLogin()">Einloggen</button>
+        <p>Noch kein Account? <span class="link-toggle" onclick="showPage('register-page')">Registrieren</span></p>
+    </div>
+
+    <div class="container hidden" id="register-page">
+        <h1>Registrieren</h1>
+        <input type="text" id="reg-user" placeholder="Wunsch-Benutzername">
+        <input type="password" id="reg-pass" placeholder="Passwort wählen">
+        <button class="btn" onclick="handleRegister()">Account erstellen</button>
+        <p>Bereits Account? <span class="link-toggle" onclick="showPage('login-page')">Zum Login</span></p>
+    </div>
+
+    <div class="container hidden" id="main-page">
+        <h1 id="welcome-title">ReToX Company</h1>
         <div class="status-wrapper">
             <span class="status-dot"></span>
             <span>Server in Arbeit...</span>
         </div>
-
         <div class="ip">RETOX-NETWORK.DDNS.NET</div>
         
-        <button class="btn btn-web" onclick="goToWebsite()">🌐 Unsere Webseite</button>
+        <button class="btn btn-secondary" onclick="window.open('https://DEINE-WEBSEITE.de', '_blank')">🌐 Unsere Webseite</button>
         <button class="btn btn-apply" onclick="showPage('apply-page')">✨ Jetzt bewerben</button>
+        <button class="btn btn-secondary" style="margin-top: 20px; font-size: 0.8em;" onclick="logout()">Abmelden</button>
     </div>
 
     <div class="container hidden" id="apply-page">
         <div id="form-container">
             <h1>Bewerbung</h1>
             <form id="apply-form" action="https://formspree.io/f/xwvnewol" method="POST">
-                <label>Name</label>
-                <input type="text" name="name" required>
-                <label>Minecraft Name</label>
-                <input type="text" name="mc_name" required>
-                <label>Alter</label>
-                <input type="number" name="age" required>
-                <label>Deine Stärken</label>
-                <textarea name="reason" rows="4" required></textarea>
+                <input type="text" name="name" placeholder="Dein Name" required>
+                <input type="text" name="mc_name" placeholder="Minecraft Name" required>
+                <input type="number" name="age" placeholder="Alter" required>
+                <textarea name="reason" rows="4" placeholder="Deine Stärken..." required></textarea>
                 <button type="submit" id="submit-btn" class="btn">Absenden</button>
             </form>
-            <button class="btn" style="background:#444; color:white; margin-top:10px;" onclick="showPage('main-page')">Zurück</button>
+            <button class="btn btn-secondary" onclick="showPage('main-page')">Zurück</button>
         </div>
 
         <div id="success-box" class="hidden">
             <h1>Erfolgreich!</h1>
-            <p class="success-text">Bewerbung verschickt.</p>
+            <p>Bewerbung verschickt.</p>
             <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn-discord">➡️ Discord beitreten</a>
-            <button class="btn" style="background:#444; color:white; margin-top:30px;" onclick="location.reload()">Zur Startseite</button>
+            <button class="btn btn-secondary" style="margin-top: 20px;" onclick="location.reload()">Startseite</button>
         </div>
     </div>
 
     <script>
-        // NAVIGATION: Hier die Adresse deiner anderen Webseite eintragen!
-        function goToWebsite() {
-            window.location.href = "DEINE_WEBSITE_URL_HIER"; 
-        }
-
+        // Seitenwechsel Funktion
         function showPage(pageId) {
             document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
             document.getElementById(pageId).classList.remove('hidden');
         }
 
+        // Registrierung
+        function handleRegister() {
+            const user = document.getElementById('reg-user').value;
+            const pass = document.getElementById('reg-pass').value;
+            if(user && pass) {
+                localStorage.setItem('retox_user', user);
+                localStorage.setItem('retox_pass', pass);
+                alert("Account erstellt! Du kannst dich jetzt einloggen.");
+                showPage('login-page');
+            } else {
+                alert("Bitte fülle alle Felder aus.");
+            }
+        }
+
+        // Login
+        function handleLogin() {
+            const user = document.getElementById('login-user').value;
+            const pass = document.getElementById('login-pass').value;
+            const storedUser = localStorage.getItem('retox_user');
+            const storedPass = localStorage.getItem('retox_pass');
+
+            if(user === storedUser && pass === storedPass && user !== null) {
+                document.getElementById('welcome-title').innerHTML = "Willkommen, " + user + "!";
+                showPage('main-page');
+            } else {
+                alert("Falscher Benutzername oder Passwort!");
+            }
+        }
+
+        function logout() {
+            showPage('login-page');
+        }
+
+        // Formspree AJAX
         const form = document.getElementById("apply-form");
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
             const btn = document.getElementById("submit-btn");
             const data = new FormData(event.target);
-            btn.disabled = true;
-            btn.innerHTML = "Wird gesendet...";
+            btn.disabled = true; btn.innerHTML = "Wird gesendet...";
 
             fetch(event.target.action, {
                 method: 'POST',
@@ -116,9 +142,8 @@
                     document.getElementById('form-container').classList.add('hidden');
                     document.getElementById('success-box').classList.remove('hidden');
                 } else {
-                    alert("Fehler beim Senden!");
-                    btn.disabled = false;
-                    btn.innerHTML = "Absenden";
+                    alert("Fehler!");
+                    btn.disabled = false; btn.innerHTML = "Absenden";
                 }
             });
         });
