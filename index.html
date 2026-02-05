@@ -46,31 +46,11 @@
         .close-x { position: absolute; top: 15px; right: 20px; color: #ffaa00; font-size: 24px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .close-x:hover { color: white; transform: scale(1.2); }
 
-        /* Status & IP (ONLINE VERSION) */
-        .status-wrapper { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-weight: bold; }
-        .status-dot { 
-            height: 10px; 
-            width: 10px; 
-            background-color: #55ff55; 
-            border-radius: 50%; 
-            display: inline-block; 
-            margin-right: 8px; 
-            box-shadow: 0 0 12px #55ff55; 
-            animation: pulse 1.5s infinite; 
-        }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
-        
-        .ip { 
-            background: #000; 
-            padding: 15px; 
-            font-family: monospace; 
-            border-radius: 10px; 
-            color: #ffaa00; 
-            margin-bottom: 25px; 
-            border: 1px solid #ffaa00; 
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+        /* Status & IP */
+        .status-wrapper { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-weight: bold; color: #ffaa00; }
+        .status-dot { height: 10px; width: 10px; background-color: #ffaa00; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px #ffaa00; animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin-bottom: 25px; border: 1px solid #333; text-decoration: line-through; }
 
         /* Buttons */
         .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; margin-bottom: 10px; transition: 0.2s; font-size: 1em; }
@@ -79,10 +59,11 @@
         .btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 20px; }
         .btn-logout:hover { background: #ff4444; color: white; }
 
+        /* Website Link */
         .link-web { display: block; color: #aaa; text-decoration: none; font-size: 0.9em; margin: 15px 0; transition: 0.3s; cursor: pointer; }
         .link-web:hover { color: #ffaa00; text-decoration: underline; }
 
-        /* Inhaltsverzeichnis */
+        /* Inhaltsverzeichnis Animation */
         .content-list { list-style: none; padding: 0; margin: 20px 0; }
         .content-item {
             background: #333; margin-bottom: 15px; padding: 20px; border-radius: 12px; border-left: 5px solid #ffaa00;
@@ -91,30 +72,35 @@
         .content-item.active { background: #ffaa00 !important; max-height: 1000px; border-left-color: white; transform: scale(1.02); }
         .content-item h3 { margin: 0; color: #ffaa00; font-size: 1.2em; }
         .content-item.active h3 { color: #222; }
-        .short-desc { margin-top: 8px; font-size: 0.9em; color: #ccc; }
+        .short-desc { margin-top: 8px; font-size: 0.9em; color: #ccc; transition: 0.3s; }
         .content-item.active .short-desc { display: none; }
         .detail-text { display: none; color: #111; font-size: 1em; line-height: 1.5; margin-top: 10px; animation: fadeIn 0.5s forwards; }
         .content-item.active .detail-text { display: block; }
         
-        /* Social Media & Server Detail */
+        /* Social Media Styling */
         .social-link { display: block; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; margin-bottom: 8px; text-decoration: none; color: #111; font-weight: bold; transition: 0.3s; border-left: 4px solid #222; }
         .social-link:hover { background: rgba(0,0,0,0.25); transform: translateX(5px); }
         .social-link.upcoming { color: #666; border-left-color: #777; cursor: default; }
+        .social-link.upcoming:hover { transform: none; background: rgba(0,0,0,0.15); }
         .tag { font-size: 0.7em; background: #444; color: white; padding: 2px 6px; border-radius: 4px; margin-left: 10px; text-transform: uppercase; }
 
+        /* Mitarbeiter & Server Detail Styling */
         .staff-group, .server-modi { margin-bottom: 15px; padding: 5px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); }
+        .server-modi:last-child { border: none; }
         .mode-title { font-weight: bold; text-transform: uppercase; font-size: 0.9em; display: block; color: #222; }
         .rank { font-weight: bold; text-transform: uppercase; font-size: 0.85em; display: block; }
         .rank.owner { color: #aa0000; } 
         .rank.co-owner { color: #ff4444; } 
         .rank.cutter { color: #5555ff; } 
         .rank.dev { color: #55ff55; } 
+        .names, .mode-desc { font-weight: 500; font-size: 1em; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .hidden { display: none; }
 
         input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-family: inherit; }
         textarea { resize: none; min-height: 110px; }
+        select { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -144,7 +130,7 @@
         
         <div class="status-wrapper">
             <span class="status-dot"></span>
-            <span style="color: #55ff55;">Server online</span>
+            <span>Server in Arbeit...</span>
         </div>
         <div class="ip">RETOX-NETWORK.DDNS.NET</div>
         
@@ -163,7 +149,11 @@
                 <h3>Über Uns</h3>
                 <p class="short-desc">Unsere Reise seit Oktober 2025.</p>
                 <div class="detail-text">
-                    Die ReToX Company wurde im Oktober 2025 von René und Tobias gegründet. Was als YouTube-Projekt begann, wuchs schnell über sich hinaus. Trotz kleinerer Rückschläge wie dem PVP-Projekt "Legends" im Dezember 2025, schafften wir ab Januar 2026 den Durchbruch und erreichten bereits im Februar die Marke von 3.000 Abonnenten. Heute stehen wir für Qualität und eine starke Community.
+                    Die ReToX Company wurde im Oktober 2025 von René und Tobias ins Leben gerufen. Was ursprünglich als kleines YouTube-Projekt für Shorts begann, entwickelte sich schnell zu etwas Größerem. 
+                    <br><br>
+                    Am 12.12.2025 starteten wir unser erstes Minecraft-Projekt "ReToX Legends". Auch wenn dieses mit 7 Spielern zunächst klein blieb, ließen wir uns nicht entmutigen. Ab dem 13.01.2026 nahm unsere Reise Fahrt auf: Unsere Community wuchs rasant, sodass wir bereits im Februar 2026 die Marke von 3.000 Abonnenten auf YouTube knacken konnten.
+                    <br><br>
+                    Heute setzen wir auf eine starke, ausdauernde Gemeinschaft und höchste Qualität in allem, was wir tun.
                 </div>
             </li>
 
@@ -173,11 +163,11 @@
                 <div class="detail-text">
                     <div class="server-modi">
                         <span class="mode-title">🔥 ReToX SMP</span>
-                        <span class="mode-desc">Action, Wirtschaftssystem, PVP und ein einzigartiger Spawn.</span>
+                        <span class="mode-desc">Actionreiches Erlebnis mit ausgeprägtem Wirtschaftssystem, PVP, RTP und einem coolen Spawn.</span>
                     </div>
                     <div class="server-modi">
-                        <span class="mode-title">🏗️ ReToX Attack</span>
-                        <span class="mode-desc">Gemeinsames Bauen und friedliches Survival im Team.</span>
+                        <span class="mode-title">🏗️ ReToX Attack (Survival)</span>
+                        <span class="mode-desc">Hier steht die Gemeinschaft im Fokus. Errichte allein oder im Team große Bauwerke in einer freundlichen Umgebung.</span>
                     </div>
                     <div class="server-modi">
                         <span class="mode-title">🚀 Demnächst</span>
@@ -188,7 +178,7 @@
 
             <li class="content-item" onclick="toggleDetail(this)">
                 <h3>Unsere Social Kanäle</h3>
-                <p class="short-desc">Folge uns überall.</p>
+                <p class="short-desc">Folge uns auf allen Plattformen.</p>
                 <div class="detail-text">
                     <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="social-link">💬 Discord</a>
                     <a href="https://youtube.com/@retox_company?si=JOvO3NTVKhga1mWn" target="_blank" class="social-link">🎬 YouTube</a>
@@ -202,14 +192,26 @@
                 <h3>Unsere Mitarbeiter</h3>
                 <p class="short-desc">Das Team hinter der Company</p>
                 <div class="detail-text">
-                    <div class="staff-group"><span class="rank owner">Inhaber</span> René, Tobias</div>
-                    <div class="staff-group"><span class="rank co-owner">Co-Inhaber</span> Sebastian</div>
-                    <div class="staff-group"><span class="rank cutter">Cutter</span> Ingemar, Jonas</div>
-                    <div class="staff-group"><span class="rank dev">Developer</span> <i>Gesucht...</i></div>
+                    <div class="staff-group">
+                        <span class="rank owner">Inhaber</span>
+                        <span class="names">René, Tobias</span>
+                    </div>
+                    <div class="staff-group">
+                        <span class="rank co-owner">Co-Inhaber</span>
+                        <span class="names">Sebastian</span>
+                    </div>
+                    <div class="staff-group">
+                        <span class="rank cutter">Cutter</span>
+                        <span class="names">Ingemar, Jonas</span>
+                    </div>
+                    <div class="staff-group">
+                        <span class="rank dev">Developer</span>
+                        <span class="names"><i>Noch suchend...</i></span>
+                    </div>
                 </div>
             </li>
         </ul>
-        <button class="btn" style="background:#444; color:white;" onclick="showPage('main-page')">Zurück</button>
+        <button class="btn" style="background:#444; color:white;" onclick="showPage('main-page')">Zurück zum Portal</button>
     </div>
 
     <div class="container hidden" id="apply-page">
@@ -219,34 +221,91 @@
                 <input type="text" name="name" placeholder="Echter Name" required>
                 <input type="text" name="mc_name" placeholder="Minecraft Name" required>
                 <input type="number" name="age" placeholder="Alter" required>
+                
                 <select name="position" required>
-                    <option value="" disabled selected>Bewirb dich als...</option>
+                    <option value="" disabled selected>Als was möchtest du dich bewerben?</option>
                     <option value="Supporter">Supporter</option>
+                    <option value="Moderator">Moderator</option>
                     <option value="Developer">Developer</option>
                     <option value="Builder">Builder</option>
                     <option value="Cutter">Cutter</option>
+                    <option value="Designer">Designer</option>
                 </select>
-                <textarea name="message" placeholder="Warum wir?" required></textarea>
+
+                <textarea name="message" placeholder="Warum willst du ins Team?" required></textarea>
                 <button type="submit" id="submit-btn" class="btn">Absenden</button>
             </form>
             <button class="btn" style="background:#444; color:white;" onclick="showPage('main-page')">Zurück</button>
         </div>
         <div id="success-box" class="hidden">
-            <p style="color: #55ff55; font-weight: bold;">Gesendet!</p>
-            <button class="btn" onclick="location.reload()">Start</button>
+            <p style="color: #55ff55; font-weight: bold;">Erfolgreich verschickt!</p>
+            <button class="btn" style="background:#444; color:white;" onclick="location.reload()">Startseite</button>
         </div>
     </div>
 
     <script>
-        function showPage(p) { document.querySelectorAll('.container').forEach(c => c.classList.add('hidden')); document.getElementById(p).classList.remove('hidden'); }
-        function toggleDetail(e) { const a = e.classList.contains('active'); document.querySelectorAll('.content-item').forEach(i => i.classList.remove('active')); if(!a) e.classList.add('active'); }
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        function toggleDetail(element) {
+            const isActive = element.classList.contains('active');
+            document.querySelectorAll('.content-item').forEach(item => item.classList.remove('active'));
+            if (!isActive) element.classList.add('active');
+        }
+
         function closeAuth() { document.getElementById('auth-overlay').classList.add('hidden'); }
         function openAuth() { document.getElementById('auth-overlay').classList.remove('hidden'); }
-        function toggleAuth(t) { document.getElementById('login-form').classList.toggle('hidden', t==='reg'); document.getElementById('register-form').classList.toggle('hidden', t==='log'); }
-        function handleRegister() { const u=document.getElementById('reg-user').value, p=document.getElementById('reg-pass').value; if(u&&p){localStorage.setItem('retox_u',u);localStorage.setItem('retox_p',p);alert("Erstellt!");toggleAuth('log');}}
-        function handleLogin() { const u=document.getElementById('login-user').value, p=document.getElementById('login-pass').value; if(u===localStorage.getItem('retox_u')&&p===localStorage.getItem('retox_p')){const g=document.getElementById('user-greeting');g.innerText="Hallo, "+u+"!";g.classList.remove('hidden');document.getElementById('guest-login-btn').classList.add('hidden');document.getElementById('user-logout-btn').classList.remove('hidden');closeAuth();}else{alert("Falsch!");}}
-        function handleLogout() { document.getElementById('user-greeting').classList.add('hidden'); document.getElementById('guest-login-btn').classList.remove('hidden'); document.getElementById('user-logout-btn').classList.add('hidden'); alert("Abgemeldet!"); }
-        document.getElementById("apply-form").addEventListener("submit",function(e){e.preventDefault();const b=document.getElementById("submit-btn");b.disabled=true;b.innerText="Sende...";fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(()=>{document.getElementById('form-container').classList.add('hidden');document.getElementById('success-box').classList.remove('hidden');});});
+        function toggleAuth(type) {
+            document.getElementById('login-form').classList.toggle('hidden', type === 'reg');
+            document.getElementById('register-form').classList.toggle('hidden', type === 'log');
+        }
+
+        function handleRegister() {
+            const u = document.getElementById('reg-user').value;
+            const p = document.getElementById('reg-pass').value;
+            if(u && p) {
+                localStorage.setItem('retox_u', u);
+                localStorage.setItem('retox_p', p);
+                alert("Account erstellt!");
+                toggleAuth('log');
+            }
+        }
+
+        function handleLogin() {
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+            if(u === localStorage.getItem('retox_u') && p === localStorage.getItem('retox_p')) {
+                const greeting = document.getElementById('user-greeting');
+                greeting.innerText = "Hallo, " + u + "!";
+                greeting.classList.remove('hidden');
+                document.getElementById('guest-login-btn').classList.add('hidden');
+                document.getElementById('user-logout-btn').classList.remove('hidden');
+                closeAuth();
+            } else { alert("Falsche Daten!"); }
+        }
+
+        function handleLogout() {
+            document.getElementById('user-greeting').classList.add('hidden');
+            document.getElementById('guest-login-btn').classList.remove('hidden');
+            document.getElementById('user-logout-btn').classList.add('hidden');
+            alert("Abgemeldet!");
+        }
+
+        document.getElementById("apply-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const btn = document.getElementById("submit-btn");
+            btn.disabled = true; btn.innerText = "Sende...";
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: { 'Accept': 'application/json' }
+            }).then(() => {
+                document.getElementById('form-container').classList.add('hidden');
+                document.getElementById('success-box').classList.remove('hidden');
+            });
+        });
     </script>
 </body>
 </html>
