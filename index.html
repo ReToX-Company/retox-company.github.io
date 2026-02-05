@@ -11,16 +11,20 @@
         .work-notice { font-weight: bold; color: #ffaa00; margin-bottom: 20px; border: 1px dashed #ffaa00; padding: 10px; }
         .ip { background: #000; padding: 15px; font-family: monospace; border-radius: 10px; color: #555; margin: 20px 0; font-size: 1.2em; border: 1px solid #333; text-decoration: line-through; }
         
+        /* Buttons */
         .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; font-size: 1em; margin-bottom: 10px; transition: 0.2s; }
         .btn:hover { transform: scale(1.02); opacity: 0.9; }
         .btn-apply { background: #5555ff; color: white; margin-top: 15px; }
         .btn-info { background: #555; color: white; }
-        .btn-back { background: #444; color: white; margin-top: 15px; }
+        .btn-discord { background: #7289da; color: white; font-size: 1.2em; padding: 20px; margin-top: 20px; display: block; }
 
         input, textarea { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; }
         label { display: block; text-align: left; font-size: 0.8em; color: #aaa; margin-top: 10px; }
         .hidden { display: none; }
         .info-text { text-align: left; line-height: 1.6; color: #ccc; }
+        
+        #success-box { padding: 20px; }
+        .success-text { color: #55ff55; font-weight: bold; font-size: 1.1em; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -37,47 +41,81 @@
     <div class="container hidden" id="info-page">
         <h1>Informationen</h1>
         <div class="info-text">
-            <p><strong>Über uns:</strong><br>ReToX Company wird ein einzigartiges Minecraft-Netzwerk mit Fokus auf Qualität und Spielspaß.</p>
-            <p><strong>Was wir suchen:</strong><br>Wir suchen aktuell Builder, Developer und Supporter, die Lust haben, von Anfang an dabei zu sein.</p>
+            <p><strong>Über uns:</strong> ReToX Company wird ein einzigartiges Minecraft-Netzwerk.</p>
+            <p><strong>Joinen:</strong> Aktuell arbeiten wir noch an der Technik. Sobald wir fertig sind, erfährst du es hier oder auf Discord!</p>
         </div>
-        <button class="btn btn-back" onclick="showPage('main-page')">Zurück</button>
+        <button class="btn" style="background:#444; color:white; margin-top:15px;" onclick="showPage('main-page')">Zurück</button>
     </div>
 
     <div class="container hidden" id="apply-page">
-        <h1>Bewerbung</h1>
-        <p>Nach dem Absenden wirst du automatisch zu unserem Discord weitergeleitet.</p>
         
-        <form action="https://formspree.io/f/xwvnewol" method="POST">
-            <input type="hidden" name="_next" value="https://discord.gg/JwJmq2zFtm">
-            <input type="hidden" name="_subject" value="Neue Team-Bewerbung!">
+        <div id="form-container">
+            <h1>Bewerbung</h1>
+            <form id="apply-form" action="https://formspree.io/f/xwvnewol" method="POST">
+                <label>Echter Name</label>
+                <input type="text" name="name" required>
+                <label>Minecraft Name</label>
+                <input type="text" name="mc_name" required>
+                <label>Alter</label>
+                <input type="number" name="age" required>
+                <label>Was kannst du? (Build/Dev/Support)</label>
+                <textarea name="reason" rows="4" required></textarea>
+                
+                <button type="submit" id="submit-btn" class="btn">Absenden</button>
+            </form>
+            <button class="btn" style="background:#444; color:white; margin-top:10px;" onclick="showPage('main-page')">Zurück</button>
+        </div>
+
+        <div id="success-box" class="hidden">
+            <h1>Vielen Dank!</h1>
+            <p class="success-text">Deine Bewerbung wurde erfolgreich verschickt.</p>
+            <p>Um das Ganze abzuschließen, tritt bitte unserem Discord bei:</p>
             
-            <label>Echter Name</label>
-            <input type="text" name="name" required>
+            <a href="https://discord.gg/JwJmq2zFtm" target="_blank" class="btn btn-discord">➡️ ReToX Discord beitreten</a>
             
-            <label>Minecraft Name</label>
-            <input type="text" name="mc_name" required>
-            
-            <label>Alter</label>
-            <input type="number" name="age" required>
-            
-            <label>Was kannst du? (Build/Dev/Support)</label>
-            <textarea name="reason" rows="4" required></textarea>
-            
-            <button type="submit" class="btn">Bewerbung absenden & Discord joinen</button>
-        </form>
-        
-        <button class="btn btn-back" onclick="showPage('main-page')">Zurück</button>
+            <button class="btn" style="background:#444; color:white; margin-top:30px;" onclick="location.reload()">Zurück zur Startseite</button>
+        </div>
+
     </div>
 
     <script>
-        // Funktion zum Wechseln der Seiten
         function showPage(pageId) {
             document.getElementById('main-page').classList.add('hidden');
             document.getElementById('info-page').classList.add('hidden');
             document.getElementById('apply-page').classList.add('hidden');
-            
             document.getElementById(pageId).classList.remove('hidden');
         }
+
+        // AJAX Versand
+        const form = document.getElementById("apply-form");
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const btn = document.getElementById("submit-btn");
+            const data = new FormData(event.target);
+            
+            btn.disabled = true;
+            btn.innerHTML = "Wird gesendet...";
+
+            fetch(event.target.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    // Formular weg, Discord-Button her
+                    document.getElementById('form-container').classList.add('hidden');
+                    document.getElementById('success-box').classList.remove('hidden');
+                } else {
+                    alert("Fehler beim Senden. Bitte versuche es später nochmal.");
+                    btn.disabled = false;
+                    btn.innerHTML = "Absenden";
+                }
+            }).catch(error => {
+                alert("Verbindung zum Server fehlgeschlagen.");
+                btn.disabled = false;
+                btn.innerHTML = "Absenden";
+            });
+        });
     </script>
 </body>
 </html>
