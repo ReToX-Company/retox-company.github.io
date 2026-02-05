@@ -28,9 +28,13 @@
         /* Buttons */
         .btn { display: inline-block; background: #ffaa00; color: black; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; width: 100%; box-sizing: border-box; margin-bottom: 10px; transition: 0.2s; font-size: 1em; }
         .btn:hover { transform: scale(1.02); background: #ffbb33; }
-        .btn-apply { background: #5555ff; color: white; }
-        .btn-web { background: #444; color: white; }
-        .btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 20px; }
+        .btn-apply { background: #5555ff; color: white; margin-top: 10px; margin-bottom: 15px; }
+        
+        /* Text-Link für Website */
+        .link-web { display: block; color: #aaa; text-decoration: none; font-size: 0.9em; margin-top: 5px; transition: 0.3s; cursor: pointer; }
+        .link-web:hover { color: #ffaa00; text-decoration: underline; }
+
+        .btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 25px; }
         .btn-logout:hover { background: #ff4444; color: white; }
 
         input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; }
@@ -70,10 +74,11 @@
 
         <div class="ip">RETOX-NETWORK.DDNS.NET</div>
         
-        <button class="btn btn-web" onclick="window.open('https://DEINE-WEBSEITE.de', '_blank')">🌐 Unsere Webseite</button>
         <button class="btn btn-apply" onclick="showApplyPage()">✨ Jetzt bewerben</button>
         
-        <button id="guest-login-btn" class="btn" style="background: transparent; color: #ffaa00; border: 1px solid #ffaa00; margin-top: 20px;" onclick="openAuth()">Anmelden / Registrieren</button>
+        <span class="link-web" onclick="window.open('https://DEINE-WEBSEITE.de', '_blank')">🌐 Weiter zur Website</span>
+        
+        <button id="guest-login-btn" class="btn" style="background: transparent; color: #ffaa00; border: 1px solid #ffaa00; margin-top: 25px;" onclick="openAuth()">Anmelden / Registrieren</button>
         
         <button id="user-logout-btn" class="btn btn-logout hidden" onclick="handleLogout()">Abmelden</button>
     </div>
@@ -88,19 +93,18 @@
                 <textarea name="reason" rows="4" placeholder="Warum willst du ins Team?" style="width:100%; background:#333; color:white; border-radius:8px; padding:10px; margin-bottom:10px; border:1px solid #444;" required></textarea>
                 <button type="submit" id="submit-btn" class="btn">Absenden</button>
             </form>
-            <button class="btn btn-web" onclick="showMainPage()">Zurück</button>
+            <button class="btn" style="background:#444; color:white;" onclick="showMainPage()">Zurück</button>
         </div>
 
         <div id="success-box" class="hidden">
             <h1>Erfolgreich!</h1>
             <p>Wir haben deine Nachricht erhalten.</p>
             <a href="https://discord.gg/JwJmq2zFtm" target="_blank" style="background:#7289da; color:white; padding:15px; display:block; text-decoration:none; border-radius:8px; font-weight:bold; margin-top:10px;">➡️ Discord beitreten</a>
-            <button class="btn btn-web" style="margin-top: 20px;" onclick="location.reload()">Startseite</button>
+            <button class="btn" style="background:#444; color:white; margin-top: 20px;" onclick="location.reload()">Startseite</button>
         </div>
     </div>
 
     <script>
-        // Overlay Funktionen
         function closeAuth() { document.getElementById('auth-overlay').classList.add('hidden'); }
         function openAuth() { document.getElementById('auth-overlay').classList.remove('hidden'); }
         function toggleAuth(type) {
@@ -113,7 +117,6 @@
             }
         }
 
-        // Login & Register Logik
         function handleRegister() {
             const u = document.getElementById('reg-user').value;
             const p = document.getElementById('reg-pass').value;
@@ -149,7 +152,6 @@
             alert("Erfolgreich abgemeldet!");
         }
 
-        // Seiten-Navigation
         function showApplyPage() {
             document.getElementById('main-page').classList.add('hidden');
             document.getElementById('apply-page').classList.remove('hidden');
@@ -159,7 +161,6 @@
             document.getElementById('main-page').classList.remove('hidden');
         }
 
-        // Formspree AJAX
         const form = document.getElementById("apply-form");
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
