@@ -17,7 +17,6 @@
             overflow-x: hidden; 
         }
         
-        /* Haupt-Container */
         .container { 
             background: #222; 
             padding: 30px; 
@@ -35,10 +34,17 @@
             font-size: 2.5em; 
             text-transform: uppercase; 
             text-shadow: 0 0 15px rgba(255, 170, 0, 0.6), 2px 2px #000; 
-            margin-bottom: 10px; 
+            margin-bottom: 5px; 
         }
 
-        /* Login-Overlay */
+        /* User-Begrüßung */
+        .user-badge {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
         .overlay { 
             position: fixed; 
             top: 0; 
@@ -74,7 +80,6 @@
         }
         .close-x:hover { color: white; transform: scale(1.2); }
 
-        /* Status & IP */
         .status-wrapper { 
             display: flex; 
             align-items: center; 
@@ -106,7 +111,6 @@
             text-decoration: line-through; 
         }
 
-        /* Buttons & Inputs */
         .btn { 
             display: inline-block; 
             background: #ffaa00; 
@@ -140,11 +144,10 @@
         }
         
         textarea { 
-            resize: none; /* Verhindert Vergrößern/Verkleinern */
+            resize: none; 
             min-height: 110px; 
         }
 
-        /* Website Link Design */
         .link-web { 
             display: block; 
             color: #aaa; 
@@ -191,7 +194,9 @@
     </div>
 
     <div class="container" id="main-page">
-        <h1 id="welcome-text">ReToX Company</h1>
+        <h1>ReToX Company</h1>
+        
+        <div id="user-greeting" class="user-badge hidden"></div>
         
         <div class="status-wrapper">
             <span class="status-dot"></span>
@@ -230,7 +235,6 @@
     </div>
 
     <script>
-        // Overlay Management
         function closeAuth() { document.getElementById('auth-overlay').classList.add('hidden'); }
         function openAuth() { document.getElementById('auth-overlay').classList.remove('hidden'); }
         function toggleAuth(type) {
@@ -243,7 +247,6 @@
             }
         }
 
-        // Auth Logik
         function handleRegister() {
             const u = document.getElementById('reg-user').value;
             const p = document.getElementById('reg-pass').value;
@@ -259,7 +262,10 @@
             const u = document.getElementById('login-user').value;
             const p = document.getElementById('login-pass').value;
             if(u === localStorage.getItem('retox_u') && p === localStorage.getItem('retox_p')) {
-                document.getElementById('welcome-text').innerText = "Hallo, " + u + "!";
+                const greeting = document.getElementById('user-greeting');
+                greeting.innerText = "Hallo, " + u + "!";
+                greeting.classList.remove('hidden');
+                
                 document.getElementById('guest-login-btn').classList.add('hidden');
                 document.getElementById('user-logout-btn').classList.remove('hidden');
                 closeAuth();
@@ -267,13 +273,12 @@
         }
 
         function handleLogout() {
-            document.getElementById('welcome-text').innerText = "ReToX Company";
+            document.getElementById('user-greeting').classList.add('hidden');
             document.getElementById('guest-login-btn').classList.remove('hidden');
             document.getElementById('user-logout-btn').classList.add('hidden');
             alert("Abgemeldet!");
         }
 
-        // Navigation
         function showApplyPage() {
             document.getElementById('main-page').classList.add('hidden');
             document.getElementById('apply-page').classList.remove('hidden');
@@ -283,7 +288,6 @@
             document.getElementById('main-page').classList.remove('hidden');
         }
 
-        // Formspree AJAX (Verhindert Weiterleitung)
         const form = document.getElementById("apply-form");
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
